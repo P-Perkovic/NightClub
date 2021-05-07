@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using NightClub.API.Dtos.Article;
 using NightClub.API.Dtos.Category;
+using NightClub.API.Dtos.Photo;
 using NightClub.API.Dtos.Table;
 using NightClub.Domain.Models;
 using System;
@@ -15,6 +17,10 @@ namespace NightClub.API.Configuration
         {
             CreateMap<Category, CategoryResultDto>().ReverseMap();
             CreateMap<Table, TableResultDto>().ReverseMap();
+            CreateMap<Article, ArticleAddDto>().ReverseMap();
+            CreateMap<Article, ArticleEditDto>().ReverseMap();
+            CreateMap<Article, ArticleResultDto>().ReverseMap();
+            CreateMap<Photo, PhotoResultDto>().ReverseMap();
         }
     }
 }

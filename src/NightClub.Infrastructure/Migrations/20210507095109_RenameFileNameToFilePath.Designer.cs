@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NightClub.Infrastructure.Context;
 
 namespace NightClub.Infrastructure.Migrations
 {
     [DbContext(typeof(NightClubDbContext))]
-    partial class NightClubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210507095109_RenameFileNameToFilePath")]
+    partial class RenameFileNameToFilePath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

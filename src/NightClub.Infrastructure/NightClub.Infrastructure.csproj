@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210506122512_CreateArticleAndPhoto.cs" />
+    <Compile Remove="Migrations\20210506122512_CreateArticleAndPhoto.Designer.cs" />
+    <Compile Remove="Migrations\20210506123229_CreateArticleAndPhoto.cs" />
+    <Compile Remove="Migrations\20210506123229_CreateArticleAndPhoto.Designer.cs" />
+    <Compile Remove="Migrations\20210506124048_CreateArticleAndPhoto.cs" />
+    <Compile Remove="Migrations\20210506124048_CreateArticleAndPhoto.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>

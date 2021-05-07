@@ -5,6 +5,7 @@ using NightClub.API.Dtos.Table;
 using NightClub.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,7 @@ namespace NightClub.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+
             var tables = await _tableService.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<TableResultDto>>(tables));

@@ -1,6 +1,7 @@
 ﻿using NightClub.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,8 +11,10 @@ namespace NightClub.Domain.Interfaces
     {
         Task Add(TEntity entity);
         Task<List<TEntity>> GetAll();
+        Task<TEntity> GetById(int id);
         Task Update(TEntity entity);
         Task Remove(TEntity entity);
-        Task<int> SaveChanges();
+        Task<IEnumerable<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> SaveChangesAsync();
     }
 }

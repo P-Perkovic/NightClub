@@ -17,6 +17,10 @@ namespace NightClub.Infrastructure.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(20)");
 
+            builder.Property(c => c.MinBillValue)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
             // 1 : N => Category : Tables
             builder.HasMany(c => c.Tables)
                 .WithOne(b => b.Category)

@@ -8,6 +8,8 @@ namespace NightClub.Domain.Models
     {
         public string Name { get; set; }
 
+        public decimal MinBillValue { get; set; }
+
         /* EF */
         public IEnumerable<Table> Tables { get; set; }
     }

@@ -23,6 +23,12 @@ namespace NightClub.API.Configuration
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITableService, TableService>();
 
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+
             return services;
         }
     }
