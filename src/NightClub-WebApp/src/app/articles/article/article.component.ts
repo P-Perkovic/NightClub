@@ -1,3 +1,4 @@
+import { ArticleService } from './../../_services/article.service';
 import { Article } from 'src/app/_models/Article';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
@@ -17,7 +18,9 @@ export class ArticleComponent implements OnInit {
   }
   fileName: string = 'Choose image';
   fileBtn: string = this.fileName;
-  constructor() { }
+  isImageInputInvalid: boolean = true;
+  isImageInputClicked: boolean = false;
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
   }
@@ -26,9 +29,19 @@ export class ArticleComponent implements OnInit {
     var reader = new FileReader();
     this.fileName = files[0].name;
     this.fileBtn = 'Replace image'
+    this.isImageInputInvalid = false;
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
       this.article.photoURL = reader.result;
     }
+  }
+
+  uploadClick() {
+    this.isImageInputClicked = true;
+  }
+
+  submit() {
+    this.articleService.addArticle(this.article)
+      .subscribe(a => console.log(a));
   }
 }

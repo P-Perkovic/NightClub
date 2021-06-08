@@ -20,7 +20,7 @@ namespace NightClub.Infrastructure.Repositories
 
         public async Task Add(Article article, string photoURL)
         {
-            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src\assets\\photos");
+            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src\\assets\\photos");
 
             if (!Directory.Exists(uploadsFolderPath))
                 Directory.CreateDirectory(uploadsFolderPath);
