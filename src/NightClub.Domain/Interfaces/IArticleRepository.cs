@@ -1,4 +1,5 @@
-﻿using NightClub.Domain.Models;
+﻿using Microsoft.AspNetCore.Http;
+using NightClub.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace NightClub.Domain.Interfaces
 {
     public interface IArticleRepository : IRepository<Article>
     {
-        new Task<List<Article>> GetAll();
-        new Task<Article> GetById(int id);
+        new Task Add(Article article, string photoURL);
+        new Task Remove(Article article);
     }
 }

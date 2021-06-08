@@ -38,6 +38,8 @@ namespace NightClub.API
 
             services.AddControllers();
 
+            services.AddCors();
+
             services.ResolveDependencies();
 
             services.AddSwaggerGen(c =>
@@ -55,6 +57,8 @@ namespace NightClub.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NightClub.API v1"));
             }
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

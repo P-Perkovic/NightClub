@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NightClub.Infrastructure.Context;
 
 namespace NightClub.Infrastructure.Migrations
 {
     [DbContext(typeof(NightClubDbContext))]
-    partial class NightClubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210601155118_SetArticleIdNullable")]
+    partial class SetArticleIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace NightClub.Infrastructure.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("PhotoFilePath")
                         .HasColumnType("varchar(150)");
 
                     b.Property<DateTime>("PublishingDate")
@@ -64,6 +63,29 @@ namespace NightClub.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("NightClub.Domain.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId")
+                        .IsUnique()
+                        .HasFilter("[ArticleId] IS NOT NULL");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("NightClub.Domain.Models.Table", b =>
                 {
                     b.Property<int>("Id")
@@ -85,6 +107,13 @@ namespace NightClub.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("NightClub.Domain.Models.Photo", b =>
+                {
+                    b.HasOne("NightClub.Domain.Models.Article", "Article")
+                        .WithOne("Photo")
+                        .HasForeignKey("NightClub.Domain.Models.Photo", "ArticleId");
                 });
 
             modelBuilder.Entity("NightClub.Domain.Models.Table", b =>

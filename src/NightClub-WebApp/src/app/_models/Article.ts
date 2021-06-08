@@ -3,5 +3,6 @@ export class Article {
     title: string;
     content: string;
     publishingDate: Date;
-    photoFileName: string;
+    photoFilePath: string;
+    photoURL: any;
 }

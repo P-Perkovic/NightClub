@@ -1,4 +1,5 @@
-﻿using NightClub.Domain.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using NightClub.Domain.Interfaces;
 using NightClub.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,12 @@ namespace NightClub.Domain.Services
             _articleRepository = articleRepository;
         }
 
-        public async Task<Article> Add(Article article)
+        public async Task<Article> Add(Article article, string photoURL)
         {
             if (_articleRepository.SearchAsync(a => a.Title == article.Title).Result.Any())
                 return null;
 
-            await _articleRepository.Add(article);
+            await _articleRepository.Add(article, photoURL);
             return article;
         }
 

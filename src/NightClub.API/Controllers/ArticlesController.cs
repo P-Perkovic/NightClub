@@ -6,7 +6,10 @@ using NightClub.Domain.Interfaces;
 using NightClub.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NightClub.API.Controllers
@@ -47,14 +50,20 @@ namespace NightClub.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
+            var photoURL = articleDto.PhotoURL;
+
             var article = _mapper.Map<Article>(articleDto);
             article.PublishingDate = DateTime.Now.Date;
 
-            var articleResult = await _articleService.Add(article);
+            var articleResult = await _articleService.Add(article, photoURL);
 
             if (articleResult == null) return BadRequest();
 
             return Ok(_mapper.Map<ArticleResultDto>(articleResult));
+
+            
+
+            return null;
         }
 
         [HttpPut("{id:int}")]

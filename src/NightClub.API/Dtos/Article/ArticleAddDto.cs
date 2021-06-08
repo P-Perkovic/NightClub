@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace NightClub.API.Dtos.Article
@@ -14,5 +16,8 @@ namespace NightClub.API.Dtos.Article
 
         [Required(ErrorMessage = "The field is required")]
         public string Content { get; set; }
+
+        [Required(ErrorMessage = "The field is required")]
+        public string PhotoURL { get; set; }
     }
 }

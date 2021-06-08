@@ -1,34 +1,34 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Article } from './../_models/Article';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Article } from '../_models/Article';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
-  private url: string = environment.baseUrl + 'api/articles/';
+  private baseUrl: string = environment.baseUrl + 'api/articles/';
 
   constructor(private http: HttpClient) { }
 
-  public getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(this.url);
-  }
-
-  public getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(this.url + id);
-  }
-
   public addArticle(article: Article) {
-    return this.http.post(this.url, article);
+    return this.http.post(this.baseUrl, article);
   }
 
   public updateArticle(id: number, article: Article) {
-    return this.http.put(this.url + id, article);
+    return this.http.put(this.baseUrl + id, article);
   }
 
-  public deleteArticle(id: number) {
-    return this.http.delete(this.url + id);
+  public getArticles(): Observable<Article[]> {
+    return this.http.get<Article[]>(this.baseUrl);
+  }
+
+  public deleteCArticle(id: number) {
+    return this.http.delete(this.baseUrl + id);
+  }
+
+  public getArticleById(id): Observable<Article> {
+    return this.http.get<Article>(this.baseUrl + id);
   }
 }
