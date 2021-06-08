@@ -13,7 +13,7 @@ export class ArticleService {
   constructor(private http: HttpClient) { }
 
   public addArticle(article: Article) {
-    return this.http.post(this.baseUrl, article);
+    return this.http.post<Article>(this.baseUrl, article);
   }
 
   public updateArticle(id: number, article: Article) {

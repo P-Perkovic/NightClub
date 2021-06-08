@@ -60,10 +60,6 @@ namespace NightClub.API.Controllers
             if (articleResult == null) return BadRequest();
 
             return Ok(_mapper.Map<ArticleResultDto>(articleResult));
-
-            
-
-            return null;
         }
 
         [HttpPut("{id:int}")]

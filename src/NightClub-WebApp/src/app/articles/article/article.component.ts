@@ -1,6 +1,6 @@
 import { ArticleService } from './../../_services/article.service';
 import { Article } from 'src/app/_models/Article';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-article',
@@ -13,8 +13,8 @@ export class ArticleComponent implements OnInit {
     title: '',
     content: '',
     publishingDate: null,
-    photoFilePath: '',
-    photoURL: '#'
+    photoFilePath: null,
+    photoURL: "#"
   }
   fileName: string = 'Choose image';
   fileBtn: string = this.fileName;
@@ -40,8 +40,11 @@ export class ArticleComponent implements OnInit {
     this.isImageInputClicked = true;
   }
 
-  submit() {
+  save() {
     this.articleService.addArticle(this.article)
-      .subscribe(a => console.log(a));
+      .subscribe(a => {
+        console.log(a);
+        debugger
+      });
   }
 }

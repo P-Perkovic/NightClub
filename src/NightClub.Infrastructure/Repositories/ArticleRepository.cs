@@ -34,7 +34,7 @@ namespace NightClub.Infrastructure.Repositories
             var binData = Convert.FromBase64String(base64Data);
             System.IO.File.WriteAllBytes(filePath, binData);
 
-            article.PhotoFilePath = filePath;
+            article.PhotoFilePath = Path.Combine("assets\\photos", fileName);
 
             Db.Add(article);
 
