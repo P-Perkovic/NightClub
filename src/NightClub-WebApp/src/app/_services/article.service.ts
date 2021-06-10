@@ -28,7 +28,7 @@ export class ArticleService {
     return this.http.delete(this.baseUrl + id);
   }
 
-  public getArticleById(id): Observable<Article> {
+  public getArticleById(id: number): Observable<Article> {
     return this.http.get<Article>(this.baseUrl + id);
   }
 }
