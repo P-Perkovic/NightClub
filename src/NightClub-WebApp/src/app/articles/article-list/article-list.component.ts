@@ -19,4 +19,12 @@ export class ArticleListComponent implements OnInit {
       });
   }
 
+
+
+  delete(id: number) {
+    this.articleService.deleteArticle(id)
+      .subscribe(r => {
+        this.articles.filter(a => a.id == id);
+      });
+  }
 }

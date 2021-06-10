@@ -43,7 +43,10 @@ namespace NightClub.Infrastructure.Repositories
 
         public override async Task Remove(Article article)
         {
-            File.Delete(article.PhotoFilePath);
+            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src");
+            var filePath = Path.Combine(uploadsFolderPath, article.PhotoFilePath);
+
+            File.Delete(filePath);
 
             Db.Remove(article);
             await SaveChangesAsync();

@@ -24,7 +24,7 @@ export class ArticleService {
     return this.http.get<Article[]>(this.baseUrl);
   }
 
-  public deleteCArticle(id: number) {
+  public deleteArticle(id: number) {
     return this.http.delete(this.baseUrl + id);
   }
 

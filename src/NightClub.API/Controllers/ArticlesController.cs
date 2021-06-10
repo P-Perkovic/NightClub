@@ -31,6 +31,7 @@ namespace NightClub.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var articles = await _articleService.GetAll();
+            articles = articles.OrderByDescending(a => a.PublishingDate);
 
             return Ok(_mapper.Map<IEnumerable<ArticleResultDto>>(articles));
         }
@@ -53,7 +54,7 @@ namespace NightClub.API.Controllers
             var photoURL = articleDto.PhotoURL;
 
             var article = _mapper.Map<Article>(articleDto);
-            article.PublishingDate = DateTime.Now.Date;
+            article.PublishingDate = DateTime.Now;
 
             var articleResult = await _articleService.Add(article, photoURL);
 
