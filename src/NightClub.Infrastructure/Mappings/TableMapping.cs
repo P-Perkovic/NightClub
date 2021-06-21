@@ -16,9 +16,6 @@ namespace NightClub.Infrastructure.Mappings
             builder.Property(b => b.OrdinalNumber)
                 .IsRequired();
 
-            builder.Property(b => b.MaxNumberOfGuests)
-                .IsRequired();
-
             builder.Property(b => b.CategoryId)
                .IsRequired();
 

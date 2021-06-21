@@ -1,3 +1,7 @@
 .card-img-top {
   max-height: 500px !important;
 }
+
+.add-article {
+  margin-left: 6rem;
+}

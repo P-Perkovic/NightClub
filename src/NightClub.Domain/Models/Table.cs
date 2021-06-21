@@ -8,11 +8,10 @@ namespace NightClub.Domain.Models
     {
         public int OrdinalNumber { get; set; }
 
-        public int MaxNumberOfGuests { get; set; }
-
         public int CategoryId { get; set; }
 
         /* EF */
         public Category Category { get; set; }
+        public IEnumerable<Reservation> Reservations { get; set; }
     }
 }

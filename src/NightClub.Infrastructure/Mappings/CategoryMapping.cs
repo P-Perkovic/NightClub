@@ -21,6 +21,9 @@ namespace NightClub.Infrastructure.Mappings
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 
+            builder.Property(c => c.MaxNumberOfGuests)
+                .IsRequired();
+
             // 1 : N => Category : Tables
             builder.HasMany(c => c.Tables)
                 .WithOne(b => b.Category)

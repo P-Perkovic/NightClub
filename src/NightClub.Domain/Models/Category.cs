@@ -10,6 +10,8 @@ namespace NightClub.Domain.Models
 
         public decimal MinBillValue { get; set; }
 
+        public int MaxNumberOfGuests { get; set; }
+
         /* EF */
         public IEnumerable<Table> Tables { get; set; }
     }
