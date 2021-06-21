@@ -17,5 +17,10 @@ namespace NightClub.API.Dtos.Article
 
         [Required(ErrorMessage = "The field is required")]
         public string Content { get; set; }
+
+        [Required(ErrorMessage = "The field is required")]
+        public string PhotoFilePath { get; set; }
+
+        public string PhotoURL { get; set; }
     }
 }

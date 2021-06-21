@@ -1,7 +1,7 @@
 import { ArticleService } from './../../_services/article.service';
 import { Article } from 'src/app/_models/Article';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-article',
@@ -21,12 +21,31 @@ export class ArticleComponent implements OnInit {
   fileBtn: string = this.fileName;
   isImageInputInvalid: boolean = true;
   isImageInputClicked: boolean = false;
+  header: string = 'New';
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
   constructor(private articleService: ArticleService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) {
+
+    this.route.params.subscribe(p => {
+      this.article.id = +p['id'] || 0;
+    });
+    if (this.article.id != 0) {
+      this.header = 'Edit';
+      this.fileBtn = 'Replace image';
+      this.fileName = 'Replace image';
+      this.isImageInputInvalid = false;
+    }
+  }
 
   ngOnInit() {
+    if (this.article.id != 0) {
+      this.articleService.getArticleById(this.article.id)
+        .subscribe(a => {
+          this.article = a;
+        });
+    }
   }
 
   uploadPhoto() {
@@ -46,12 +65,23 @@ export class ArticleComponent implements OnInit {
   }
 
   save() {
-    this.articleService.addArticle(this.article)
-      .subscribe(a => {
-        this.router.navigate(['/home/'])
-      },
-        err => {
-          console.log(err);
-        });
+    if (this.article.id == 0) {
+      this.articleService.addArticle(this.article)
+        .subscribe(a => {
+          this.router.navigate(['/news/']);
+        },
+          err => {
+            console.log(err);
+          });
+    }
+    else {
+      this.articleService.updateArticle(this.article.id, this.article)
+        .subscribe(a => {
+          this.router.navigate(['/news/']);
+        },
+          err => {
+            console.log(err);
+          });
+    }
   }
 }

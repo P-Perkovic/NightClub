@@ -13,7 +13,7 @@
                     <div class="row justify-content-between">
                         <small class="text-muted">Last updated {{article.publishingDate | date:'dd-MM-yyyy HH:mm'}}</small>
                         <div>
-                            <button class="btn btn-sm btn-success">Edit</button>
+                            <button (click)="edit(article.id)" class="btn btn-sm btn-success">Edit</button>
                             <button (click)="delete(article.id)" class="btn btn-sm btn-danger ml-2">Delete</button>
                         </div>
                     </div>

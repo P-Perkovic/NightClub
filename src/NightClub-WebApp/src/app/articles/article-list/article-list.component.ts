@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_models/Article';
@@ -10,7 +11,8 @@ import { Article } from 'src/app/_models/Article';
 export class ArticleListComponent implements OnInit {
   articles: Article[];
 
-  constructor(private articleService: ArticleService) { }
+  constructor(private articleService: ArticleService,
+    private router: Router) { }
 
   ngOnInit() {
     this.articleService.getArticles()
@@ -19,12 +21,12 @@ export class ArticleListComponent implements OnInit {
       });
   }
 
-
-
   delete(id: number) {
     this.articleService.deleteArticle(id)
-      .subscribe(r => {
-        this.articles.filter(a => a.id == id);
-      });
+      .subscribe();
+  }
+
+  edit(id: number) {
+    this.router.navigate(['/article/edit/' + id]);
   }
 }

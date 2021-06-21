@@ -70,8 +70,12 @@ namespace NightClub.API.Controllers
 
             if (!ModelState.IsValid) return BadRequest();
 
+            var photoURL = articleDto.PhotoURL;
+
             var article = _mapper.Map<Article>(articleDto);
-            var articleResult = await _articleService.Update(article);
+            article.PublishingDate = DateTime.Now;
+
+            var articleResult = await _articleService.Update(article, photoURL);
 
             if (articleResult == null) return BadRequest();
 

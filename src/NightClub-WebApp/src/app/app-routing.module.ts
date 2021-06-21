@@ -7,7 +7,8 @@ import { ArticleListComponent } from './articles/article-list/article-list.compo
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'article', component: ArticleComponent },
+  { path: 'article/new', component: ArticleComponent },
+  { path: 'article/edit/:id', component: ArticleComponent },
   { path: 'news', component: ArticleListComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

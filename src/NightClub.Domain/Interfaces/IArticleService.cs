@@ -12,7 +12,7 @@ namespace NightClub.Domain.Interfaces
         Task<IEnumerable<Article>> GetAll();
         Task<Article> GetById(int id);
         Task<Article> Add(Article article, string photoURL);
-        Task<Article> Update(Article article);
+        Task<Article> Update(Article article, string photoURL = null);
         Task<bool> Remove(Article article);
     }
 }

@@ -43,12 +43,12 @@ namespace NightClub.Domain.Services
             return true;
         }
 
-        public async Task<Article> Update(Article article)
+        public async Task<Article> Update(Article article, string photoURL = null)
         {
             if (_articleRepository.SearchAsync(a => a.Title == article.Title && a.Id != article.Id).Result.Any())
                 return null;
 
-            await _articleRepository.Update(article);
+            await _articleRepository.Update(article, photoURL);
             return article;
         }
 

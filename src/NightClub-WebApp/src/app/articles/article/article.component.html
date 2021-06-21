@@ -1,5 +1,5 @@
 <div class="container py-2 pb-5">
-    <h5 class="text-uppercase font-weight-light text-center m-5">New article</h5>
+    <h5 class="text-uppercase font-weight-light text-center m-5">{{header}} article</h5>
     <div class="row justify-content-center">
         <div class="col-8">
             <form #f="ngForm">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="image-area mt-4">
-                    <img [src]="article.photoFilePath ? article.photoFilePath : article.photoURL" alt="" 
+                    <img [src]="article.photoURL ? article.photoURL : article.photoFilePath" alt="" 
                             class="img-fluid rounded shadow-sm mx-auto d-block">
                 </div>
             </div>
