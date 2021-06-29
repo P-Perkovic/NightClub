@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@auth0/auth0-angular": "^1.5.1",
     "@ng-bootstrap/ng-bootstrap": "^9.1.2",
     "ngb-modal": "^2.0.3",
     "ngx-toastr": "^13.2.1",
@@ -29,7 +30,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.29",
-    "@angular/cli": "~8.3.29",
+    "@angular/cli": "^12.1.0",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
     "@types/jasmine": "~3.3.8",

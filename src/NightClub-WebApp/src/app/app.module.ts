@@ -18,6 +18,8 @@ import { NavComponent } from './nav/nav.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { NgbdDatepickerPopup } from './datepicker/datepicker-popup';
 import { FooterComponent } from './footer/footer.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { AuthButtonComponent } from './auth0/AuthButtonComponent';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { FooterComponent } from './footer/footer.component';
     NavComponent,
     ConfirmationDialogComponent,
     NgbdDatepickerPopup,
-    FooterComponent
+    FooterComponent,
+    AuthButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,11 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     BrowserAnimationsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AuthModule.forRoot({
+      domain: 'vegapperko.eu.auth0.com',
+      clientId: 'syzviMv8FkjVOzf0U7yQeNkfDK5IloxM'
+    }),
   ],
   providers: [
     TableService,
