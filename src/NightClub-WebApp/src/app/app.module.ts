@@ -20,6 +20,7 @@ import { NgbdDatepickerPopup } from './datepicker/datepicker-popup';
 import { FooterComponent } from './footer/footer.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth0/AuthButtonComponent';
+import { UserProfileComponent } from './auth0/UserProfileComponent';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthButtonComponent } from './auth0/AuthButtonComponent';
     ConfirmationDialogComponent,
     NgbdDatepickerPopup,
     FooterComponent,
-    AuthButtonComponent
+    AuthButtonComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

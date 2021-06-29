@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogService } from './../../_services/confirmation-dialog.service';
 import { Router } from '@angular/router';
 import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +14,9 @@ export class ArticleListComponent implements OnInit {
   articles: Article[];
 
   constructor(private articleService: ArticleService,
-    private router: Router) { }
+    private router: Router,
+    private confirmationDialogService: ConfirmationDialogService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.articleService.getArticles()
@@ -22,8 +26,20 @@ export class ArticleListComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.articleService.deleteArticle(id)
-      .subscribe();
+    this.confirmationDialogService.confirm('Atention', 'Do you really want to delete this article?')
+      .then(() =>
+        this.articleService.deleteArticle(id).subscribe(() => {
+          this.toastr.success('The article has been deleted.');
+          this.removeDeletedArticle(id);
+        },
+          error => {
+            this.toastr.error('Failed to delete the article.');
+          }))
+      .catch(() => '');
+  }
+
+  removeDeletedArticle(id: number) {
+    this.articles = this.articles.filter(a => a.id != id);
   }
 
   edit(id: number) {
