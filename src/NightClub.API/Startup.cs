@@ -14,6 +14,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NightClub.API.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace NightClub.API
 {
@@ -46,6 +49,17 @@ namespace NightClub.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NightClub.API", Version = "v1" });
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["Auth0:Authority"];
+                options.Audience = Configuration["Auth0:Audience"];
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +77,8 @@ namespace NightClub.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

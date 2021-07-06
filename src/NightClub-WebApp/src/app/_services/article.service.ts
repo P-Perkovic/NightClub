@@ -1,3 +1,4 @@
+import { AuthService } from '@auth0/auth0-angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -13,7 +14,7 @@ export class ArticleService {
   constructor(private http: HttpClient) { }
 
   public addArticle(article: Article) {
-    return this.http.post<Article>(this.baseUrl, article);
+    return this.http.post(this.baseUrl, article);
   }
 
   public updateArticle(id: number, article: Article) {

@@ -22,10 +22,11 @@ namespace NightClub.Domain.Services
             return reservation;
         }
 
-        public async Task<Reservation> CancelForDate(DateTime date)
+        public async Task<bool> CancelForDate(DateTime date)
         {
             await _reservationRepository.CancelAllForDate(date);
 
+            return true;
         }
 
         public async Task<IEnumerable<Reservation>> GetAllForDate(DateTime date)

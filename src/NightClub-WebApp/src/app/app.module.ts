@@ -21,6 +21,10 @@ import { FooterComponent } from './footer/footer.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth0/AuthButtonComponent';
 import { UserProfileComponent } from './auth0/UserProfileComponent';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
+import { Auth0Interceptor } from './_interceptors/auth0.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,14 +48,16 @@ import { UserProfileComponent } from './auth0/UserProfileComponent';
     NgbModule,
     ToastrModule.forRoot(),
     AuthModule.forRoot({
-      domain: 'vegapperko.eu.auth0.com',
-      clientId: 'syzviMv8FkjVOzf0U7yQeNkfDK5IloxM'
+      domain: environment.auth.domain,
+      clientId: environment.auth.clientId,
+      audience: environment.auth.audience
     }),
   ],
   providers: [
     TableService,
     ConfirmationDialogService,
-    ArticleService
+    ArticleService,
+    { provide: HTTP_INTERCEPTORS, useClass: Auth0Interceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

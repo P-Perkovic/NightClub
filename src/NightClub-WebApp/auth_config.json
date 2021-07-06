@@ -1,0 +1,6 @@
+{
+    "domain": "vegapperko.eu.auth0.com",
+    "clientId": "syzviMv8FkjVOzf0U7yQeNkfDK5IloxM",
+    "audience": "https://nightclub.api",
+    "serverUrl": "https://localhost:44393/"
+}

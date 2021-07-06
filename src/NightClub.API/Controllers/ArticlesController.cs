@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NightClub.API.Dtos.Article;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace NightClub.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ArticlesController : MainController
     {
@@ -27,6 +29,7 @@ namespace NightClub.API.Controllers
             _articleService = articleService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

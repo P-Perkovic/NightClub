@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_models/Article';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-article-list',
@@ -16,7 +17,8 @@ export class ArticleListComponent implements OnInit {
   constructor(private articleService: ArticleService,
     private router: Router,
     private confirmationDialogService: ConfirmationDialogService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.articleService.getArticles()
@@ -28,7 +30,7 @@ export class ArticleListComponent implements OnInit {
   delete(id: number) {
     this.confirmationDialogService.confirm('Atention', 'Do you really want to delete this article?')
       .then(() =>
-        this.articleService.deleteArticle(id).subscribe(() => {
+        this.articleService.deleteArticle(id).subscribe(r => {
           this.toastr.success('The article has been deleted.');
           this.removeDeletedArticle(id);
         },

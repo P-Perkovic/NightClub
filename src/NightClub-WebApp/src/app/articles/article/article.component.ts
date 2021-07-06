@@ -69,7 +69,7 @@ export class ArticleComponent implements OnInit {
   save() {
     if (this.article.id == 0) {
       this.articleService.addArticle(this.article)
-        .subscribe(a => {
+        .subscribe(() => {
           this.toastr.success('The article has been added.');
           this.router.navigate(['/news/']);
         },
@@ -79,7 +79,7 @@ export class ArticleComponent implements OnInit {
     }
     else {
       this.articleService.updateArticle(this.article.id, this.article)
-        .subscribe(a => {
+        .subscribe(() => {
           this.toastr.success('The article has been updated.');
           this.router.navigate(['/news/']);
         },
