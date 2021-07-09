@@ -22,7 +22,6 @@ import { AuthClientConfig, AuthService } from '@auth0/auth0-angular';
 export class UserProfileComponent {
   profileJson: string = null;
 
-  constructor(public auth: AuthService,
-    private authConfig: AuthClientConfig) {
+  constructor(public auth: AuthService) {
   }
 }

@@ -5,6 +5,8 @@ import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_models/Article';
 import { AuthService } from '@auth0/auth0-angular';
+import { RoleService } from 'src/app/_services/role.service';
+import { Role } from 'src/app/_models/Role';
 
 @Component({
   selector: 'app-article-list',
@@ -13,14 +15,16 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class ArticleListComponent implements OnInit {
   articles: Article[];
+  role: string;
 
   constructor(private articleService: ArticleService,
     private router: Router,
     private confirmationDialogService: ConfirmationDialogService,
-    private toastr: ToastrService,
-    private authService: AuthService) { }
+    private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.role = Role.role;
+    console.log(this.role);
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a;

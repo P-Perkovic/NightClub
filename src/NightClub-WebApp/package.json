@@ -22,6 +22,7 @@
     "@angular/router": "~12.1.0",
     "@auth0/auth0-angular": "^1.5.1",
     "@ng-bootstrap/ng-bootstrap": "^9.1.2",
+    "jwt-decode": "^3.1.2",
     "ngb-modal": "^2.0.3",
     "ngx-toastr": "^13.2.1",
     "rxjs": "~6.6.7",
