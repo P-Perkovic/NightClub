@@ -2,21 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using NightClub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using NightClub.API.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+using NightClub.API.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NightClub.API
 {
@@ -45,21 +37,17 @@ namespace NightClub.API
 
             services.ResolveDependencies();
 
+            services.ResolveAuthentication(Configuration);
+
+            services.ResolveAuthorization();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NightClub.API", Version = "v1" });
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.Authority = Configuration["Auth0:Authority"];
-                options.Audience = Configuration["Auth0:Audience"];
-            });
+            
+            services.AddSingleton<IAuthorizationHandler, IsAdminAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

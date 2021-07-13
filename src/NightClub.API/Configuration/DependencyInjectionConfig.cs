@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
+using NightClub.API.Authorization;
 using NightClub.Domain.Interfaces;
 using NightClub.Domain.Services;
 using NightClub.Infrastructure.Context;
@@ -25,6 +27,8 @@ namespace NightClub.API.Configuration
 
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
+
+            services.AddSingleton<IAuthorizationHandler, IsAdminAuthorizationHandler>();
 
             return services;
         }

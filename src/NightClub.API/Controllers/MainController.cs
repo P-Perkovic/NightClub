@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace NightClub.API.Controllers
 {
     [ApiController]
+    [Authorize]
     public abstract class MainController : ControllerBase
     {
     }

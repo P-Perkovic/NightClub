@@ -11,14 +11,11 @@ import { Role } from '../_models/Role';
 })
 export class HomeComponent implements OnInit {
   articles: Article[];
-  constructor(private articleService: ArticleService,
-    public roleService: RoleService) {
-    this.roleService.getUserRole().subscribe(r => {
-      Role.role = r;
-    });
+  constructor(private articleService: ArticleService) {
   }
 
   ngOnInit() {
+    console.log("TEST", localStorage.getItem("rola"));
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a.slice(0, 3);

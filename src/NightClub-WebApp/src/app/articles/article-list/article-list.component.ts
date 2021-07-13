@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_models/Article';
-import { AuthService } from '@auth0/auth0-angular';
-import { RoleService } from 'src/app/_services/role.service';
 import { Role } from 'src/app/_models/Role';
 
 @Component({
