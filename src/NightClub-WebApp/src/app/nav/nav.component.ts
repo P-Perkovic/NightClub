@@ -14,11 +14,4 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  authenticatedEvent() {
-    debugger
-    this.roleService.getUserRole().subscribe(r => {
-      localStorage.setItem("rola", r);
-    });
-  }
 }

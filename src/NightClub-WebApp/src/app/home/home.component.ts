@@ -1,8 +1,7 @@
-import { RoleService } from 'src/app/_services/role.service';
+import { ToastrService } from 'ngx-toastr';
 import { ArticleService } from './../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../_models/Article';
-import { Role } from '../_models/Role';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +9,21 @@ import { Role } from '../_models/Role';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  rola: string = null;
   articles: Article[];
-  constructor(private articleService: ArticleService) {
+
+  constructor(private articleService: ArticleService,
+    private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    console.log("TEST", localStorage.getItem("rola"));
+    this.rola = localStorage.getItem("rola");
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a.slice(0, 3);
-      });
+      },
+        error => {
+          this.toastr.error('Problem with server, can not get data.');
+        });
   }
 }

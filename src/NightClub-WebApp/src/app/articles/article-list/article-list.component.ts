@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_models/Article';
-import { Role } from 'src/app/_models/Role';
 
 @Component({
   selector: 'app-article-list',
@@ -13,7 +12,7 @@ import { Role } from 'src/app/_models/Role';
 })
 export class ArticleListComponent implements OnInit {
   articles: Article[];
-  role: string;
+  rola: string = null;
 
   constructor(private articleService: ArticleService,
     private router: Router,
@@ -21,12 +20,14 @@ export class ArticleListComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.role = Role.role;
-    console.log(this.role);
+    this.rola = localStorage.getItem("rola");
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a;
-      });
+      },
+        error => {
+          this.toastr.error('Problem with server, can not get data.');
+        });
   }
 
   delete(id: number) {

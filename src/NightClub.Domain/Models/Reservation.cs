@@ -12,9 +12,9 @@ namespace NightClub.Domain.Models
 
         public int NumberOfGuests { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
-        public bool IsCanceled { get; set; }
+        public bool? IsCanceled { get; set; }
 
         /* EF */
         public Table Table { get; set; }

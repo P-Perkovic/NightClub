@@ -35,6 +35,7 @@ namespace NightClub.API
 
             services.AddCors();
 
+            
             services.ResolveDependencies();
 
             services.ResolveAuthentication(Configuration);

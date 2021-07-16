@@ -18,7 +18,6 @@ namespace NightClub.API.Controllers
 {
     [Route("api/[controller]")]
     [Authorize(Policy = "IsAdmin")]
-    [ApiController]
     public class ArticlesController : MainController
     {
         private readonly IMapper _mapper;

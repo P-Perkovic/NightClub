@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace NightClub.API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class CategoriesController : MainController
     {
         private readonly IMapper _mapper;

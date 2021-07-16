@@ -28,6 +28,9 @@ namespace NightClub.API.Configuration
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
 
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddSingleton<IAuthorizationHandler, IsAdminAuthorizationHandler>();
 
             return services;
