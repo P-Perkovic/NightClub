@@ -1,3 +1,4 @@
+import { GlobalApp } from './GlobalApp';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from './_services/article.service';
 import { ConfirmationDialogService } from './_services/confirmation-dialog.service';
@@ -22,9 +23,11 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth0/AuthButtonComponent';
 import { UserProfileComponent } from './auth0/UserProfileComponent';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 import { Auth0Interceptor } from './_interceptors/auth0.interceptor';
+import { ReservTableComponent } from './reservation/reserv-table/reserv-table.component';
+import { IdentityGuardService } from './_services/identity-guard.service';
+import { IdentityService } from './_services/identity';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import { Auth0Interceptor } from './_interceptors/auth0.interceptor';
     NgbdDatepickerPopup,
     FooterComponent,
     AuthButtonComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ReservTableComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +60,10 @@ import { Auth0Interceptor } from './_interceptors/auth0.interceptor';
   providers: [
     TableService,
     ConfirmationDialogService,
+    GlobalApp,
     ArticleService,
+    IdentityGuardService,
+    IdentityService,
     { provide: HTTP_INTERCEPTORS, useClass: Auth0Interceptor, multi: true }
   ],
   bootstrap: [AppComponent]

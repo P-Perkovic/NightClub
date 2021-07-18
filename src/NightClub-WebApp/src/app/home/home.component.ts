@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rola = localStorage.getItem("rola");
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a.slice(0, 3);

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ArticleService } from './../../_services/article.service';
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_models/Article';
+import { GlobalApp } from 'src/app/GlobalApp';
 
 @Component({
   selector: 'app-article-list',
@@ -17,10 +18,10 @@ export class ArticleListComponent implements OnInit {
   constructor(private articleService: ArticleService,
     private router: Router,
     private confirmationDialogService: ConfirmationDialogService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private app: GlobalApp) { }
 
   ngOnInit() {
-    this.rola = localStorage.getItem("rola");
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a;
@@ -28,6 +29,7 @@ export class ArticleListComponent implements OnInit {
         error => {
           this.toastr.error('Problem with server, can not get data.');
         });
+    debugger
   }
 
   delete(id: number) {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { RoleService } from '../_services/role.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,8 +8,7 @@ import { RoleService } from '../_services/role.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(public auth: AuthService,
-    public roleService: RoleService) { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
   }

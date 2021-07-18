@@ -1,12 +1,7 @@
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { UserService } from './../_services/user.service';
-import { first } from 'rxjs/operators';
+import { IdentityService } from './../_services/identity';
 import { Component, Inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
-import { RoleService } from '../_services/role.service';
-import { User } from '../_models/User';
 
 @Component({
   selector: 'app-auth-button',
@@ -26,35 +21,14 @@ import { User } from '../_models/User';
 export class AuthButtonComponent {
 
   constructor(@Inject(DOCUMENT) public document: Document,
-    public auth: AuthService,
-    private roleService: RoleService,
-    private userService: UserService,
-    private toastr: ToastrService,
-    private router: Router) { }
+    public identity: IdentityService,
+    private auth: AuthService) { }
 
   login() {
-    this.auth.loginWithPopup().subscribe(() => {
-      this.roleService.getUserRole().subscribe(r => {
-        localStorage.setItem("rola", r);
-        this.auth.user$.pipe(first()).subscribe(r => {
-          var user = new User();
-          user.copyInto(r);
-          this.userService.addUser(user).subscribe(r => {
-          },
-            error => {
-              this.toastr.error('Problem in login proces.');
-              this.logout();
-            },
-            () => {
-              this.router.navigate([window.location.origin]);
-            });
-        });
-      });
-    });
+    this.identity.loginWithAuthentication();
   }
 
   logout() {
-    localStorage.removeItem("rola");
-    this.auth.logout({ returnTo: window.location.origin });
+    this.identity.logout();
   }
 }
