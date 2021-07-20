@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NightClub.API.Dtos.Admin;
 using NightClub.API.Dtos.Article;
 using NightClub.API.Dtos.Category;
 using NightClub.API.Dtos.Table;
@@ -16,6 +17,7 @@ namespace NightClub.API.Configuration
         public AutomapperConfig()
         {
             CreateMap<Category, CategoryResultDto>().ReverseMap();
+            CreateMap<Category, CategoryUpdateDto>().ReverseMap();
             CreateMap<Table, TableResultDto>().ReverseMap();
             CreateMap<Article, ArticleAddDto>().ReverseMap();
             CreateMap<Article, ArticleEditDto>().ReverseMap();
@@ -26,6 +28,10 @@ namespace NightClub.API.Configuration
             CreateMap<User, UserResultDto>().ReverseMap()
                 .ForMember(u => u.StringId, opt => opt.MapFrom(ud => ud.Id))
                 .ForMember(u => u.Id, opt => opt.Ignore());
+            CreateMap<AdminConfig, AdminConfigResultDto>().ReverseMap()
+                .ForMember(ac => ac.Id, opt => opt.Ignore());
+            CreateMap<AdminConfig, AdminConfigUpdateDto>().ReverseMap()
+                .ForMember(ac => ac.Id, opt => opt.Ignore());
         }
     }
 }

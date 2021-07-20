@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20210621111549_PopulateCategories.Designer.cs" />
     <Compile Remove="Migrations\20210621114054_AddReservations.cs" />
     <Compile Remove="Migrations\20210621114054_AddReservations.Designer.cs" />
+    <Compile Remove="Migrations\20210719134743_TEST.cs" />
+    <Compile Remove="Migrations\20210719134743_TEST.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

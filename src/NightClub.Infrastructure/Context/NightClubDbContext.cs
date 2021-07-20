@@ -16,6 +16,7 @@ namespace NightClub.Infrastructure.Context
         public DbSet<Article> Articles { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AdminConfig> AdminConfigs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

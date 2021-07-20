@@ -21,10 +21,15 @@ namespace NightClub.Domain.Services
             return await _categoryRepository.GetAll();
         }
 
+        public async Task<Category> Update(Category category)
+        {
+            await _categoryRepository.Update(category);
+            return category;
+        }
+
         public void Dispose()
         {
             _categoryRepository?.Dispose();
         }
-
     }
 }

@@ -1,3 +1,4 @@
+import { GlobalApp } from './../GlobalApp';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -8,7 +9,8 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class NavComponent implements OnInit {
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService,
+    public app: GlobalApp) { }
 
   ngOnInit() {
   }

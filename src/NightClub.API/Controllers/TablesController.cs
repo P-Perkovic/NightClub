@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 namespace NightClub.API.Controllers
 {
     [Route("api/[controller]")]
-    public class TableController : MainController
+    public class TablesController : MainController
     {
         private readonly IMapper _mapper;
         private readonly ITableService _tableService;
 
-        public TableController(IMapper mapper, ITableService tableService)
+        public TablesController(IMapper mapper, ITableService tableService)
         {
             _mapper = mapper;
             _tableService = tableService;

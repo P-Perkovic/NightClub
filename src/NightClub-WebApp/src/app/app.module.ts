@@ -21,13 +21,14 @@ import { NgbdDatepickerPopup } from './datepicker/datepicker-popup';
 import { FooterComponent } from './footer/footer.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth0/AuthButtonComponent';
-import { UserProfileComponent } from './auth0/UserProfileComponent';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Auth0Interceptor } from './_interceptors/auth0.interceptor';
 import { ReservTableComponent } from './reservation/reserv-table/reserv-table.component';
 import { IdentityGuardService } from './_services/identity-guard.service';
 import { IdentityService } from './_services/identity';
+import { UserProfileComponent } from './auth0/user-profile/user-profile.component';
+import { ReservData } from './ConfigData';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { IdentityService } from './_services/identity';
     TableService,
     ConfirmationDialogService,
     GlobalApp,
+    ReservData,
     ArticleService,
     IdentityGuardService,
     IdentityService,

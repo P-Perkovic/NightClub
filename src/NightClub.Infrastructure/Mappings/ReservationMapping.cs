@@ -27,6 +27,14 @@ namespace NightClub.Infrastructure.Mappings
                 .HasDefaultValue(false)
                 .IsRequired();
 
+            builder.Property(r => r.IsCanceledByAdmin)
+                .HasDefaultValue(false)
+                .IsRequired();
+
+            builder.Property(r => r.Note);
+
+            builder.Property(r => r.Status);
+
             // 1 : N => Reservation : Tables
             builder.HasOne(r => r.Table)
                 .WithMany(t => t.Reservations)

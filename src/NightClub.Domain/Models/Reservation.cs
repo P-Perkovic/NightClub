@@ -16,6 +16,12 @@ namespace NightClub.Domain.Models
 
         public bool? IsCanceled { get; set; }
 
+        public bool? IsCanceledByAdmin { get; set; }
+
+        public string Note { get; set; }
+
+        public string Status { get; set; }
+
         /* EF */
         public Table Table { get; set; }
     }

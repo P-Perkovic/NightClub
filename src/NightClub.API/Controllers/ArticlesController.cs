@@ -36,11 +36,6 @@ namespace NightClub.API.Controllers
             var articles = await _articleService.GetAll();
             articles = articles.OrderByDescending(a => a.PublishingDate);
 
-            if (User.Identity.IsAuthenticated)
-            {
-                string userId = User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            }
-
             return Ok(_mapper.Map<IEnumerable<ArticleResultDto>>(articles));
         }
 

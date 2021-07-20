@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace NightClub.Domain.Interfaces
 {
-    public interface ICategoryService : IDisposable
+    public interface IAdminConfigRepository : IRepository<AdminConfig>
     {
-        Task<IEnumerable<Category>> GetAll();
-
-        Task<Category> Update(Category category);
+        Task<AdminConfig> GetByKey(string key);
+        new Task Update(AdminConfig adminConfig);
     }
 }
