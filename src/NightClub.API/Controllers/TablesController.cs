@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NightClub.API.Dtos.Table;
 using NightClub.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NightClub.API.Controllers

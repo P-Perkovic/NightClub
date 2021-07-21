@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NightClub.API.Dtos.User;
 using NightClub.Domain.Interfaces;
 using NightClub.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NightClub.API.Controllers

@@ -2,7 +2,6 @@
 using NightClub.Domain.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NightClub.Domain.Services
@@ -16,10 +15,27 @@ namespace NightClub.Domain.Services
             _reservationRepository = reservationRepository;
         }
 
-        public async Task<Reservation> Cancel(Reservation reservation)
+        public async Task<IEnumerable<Reservation>> GetAllForCurrentUser(string userId)
         {
-            await _reservationRepository.Cancel(reservation);
+            return await _reservationRepository.GetAllForCurrentUser(userId);
+        }
+
+        public async Task<Reservation> Add(Reservation reservation)
+        {
+            await _reservationRepository.Add(reservation);
+
             return reservation;
+        }
+
+        public async Task<int> Cancel(int reservationId)
+        {
+            var reservation = await _reservationRepository.GetById(reservationId);
+
+            if (reservation == null)
+                return 0;
+
+            await _reservationRepository.Cancel(reservation);
+            return reservationId;
         }
 
         public async Task<bool> CancelForDate(DateTime date)
@@ -32,6 +48,11 @@ namespace NightClub.Domain.Services
         public async Task<IEnumerable<Reservation>> GetAllForDate(DateTime date)
         {
             return await _reservationRepository.GetAllForDate(date);
+        }
+
+        public async Task<IEnumerable<DateTime>> GetReservedDatesForUser(string userId)
+        {
+            return await _reservationRepository.GetReservedDatesForUser(userId);
         }
 
         public void Dispose()

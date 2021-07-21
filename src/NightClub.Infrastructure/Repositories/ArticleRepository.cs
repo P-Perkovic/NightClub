@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using static NightClub.Domain.Constants;
 using NightClub.Domain.Interfaces;
 using NightClub.Domain.Models;
 using NightClub.Infrastructure.Context;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -20,7 +16,37 @@ namespace NightClub.Infrastructure.Repositories
 
         public async Task Add(Article article, string photoURL)
         {
-            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src\\assets\\photos");
+            article.PhotoFilePath = AddFile(photoURL);
+
+            Db.Add(article);
+
+            await SaveChangesAsync();
+        }
+
+        public async Task Update(Article article, string photoURL)
+        {
+            if(photoURL != null)
+            {
+                DeleteFile(article.PhotoFilePath);
+
+                article.PhotoFilePath = AddFile(photoURL);
+            }
+
+            Db.Update(article);
+            await SaveChangesAsync();
+        }
+
+        public override async Task Remove(Article article)
+        {
+            DeleteFile(article.PhotoFilePath);
+
+            Db.Remove(article);
+            await SaveChangesAsync();
+        }
+
+        private string AddFile(string photoURL)
+        {
+            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), UPLOAD_FILE_PATH);
 
             if (!Directory.Exists(uploadsFolderPath))
                 Directory.CreateDirectory(uploadsFolderPath);
@@ -34,52 +60,15 @@ namespace NightClub.Infrastructure.Repositories
             var binData = Convert.FromBase64String(base64Data);
             System.IO.File.WriteAllBytes(filePath, binData);
 
-            article.PhotoFilePath = Path.Combine("assets\\photos", fileName);
-
-            Db.Add(article);
-
-            await SaveChangesAsync();
+            return Path.Combine(FILE_PATH, fileName);
         }
 
-        public async Task Update(Article article, string photoURL)
+        private void DeleteFile(string filePath)
         {
-            if(photoURL != null)
-            {
-                string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src");
-                var filePath = Path.Combine(uploadsFolderPath, article.PhotoFilePath);
-
-                File.Delete(filePath);
-
-                uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src\\assets\\photos");
-
-                if (!Directory.Exists(uploadsFolderPath))
-                    Directory.CreateDirectory(uploadsFolderPath);
-
-                var ext = Regex.Match(photoURL, @"data:image/(?<type>.+?),(?<data>.+)").Groups["type"].Value.Split(';')[0];
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension("." + ext);
-                filePath = Path.Combine(uploadsFolderPath, fileName);
-
-                var base64Data = Regex.Match(photoURL, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
-                var binData = Convert.FromBase64String(base64Data);
-                System.IO.File.WriteAllBytes(filePath, binData);
-
-                article.PhotoFilePath = Path.Combine("assets\\photos", fileName);
-            }
-
-            Db.Update(article);
-            await SaveChangesAsync();
-        }
-
-        public override async Task Remove(Article article)
-        {
-            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), "NightClub-WebApp\\src");
-            var filePath = Path.Combine(uploadsFolderPath, article.PhotoFilePath);
+            string uploadsFolderPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).ToString(), DELETE_FILE_PATH);
+            filePath = Path.Combine(uploadsFolderPath, filePath);
 
             File.Delete(filePath);
-
-            Db.Remove(article);
-            await SaveChangesAsync();
         }
     }
 }

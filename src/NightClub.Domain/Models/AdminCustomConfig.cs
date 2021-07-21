@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NightClub.Domain.Models
+﻿namespace NightClub.Domain.Models
 {
     public class AdminCustomConfig : Entity
     {

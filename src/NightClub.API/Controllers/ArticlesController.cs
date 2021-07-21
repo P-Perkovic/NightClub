@@ -1,23 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NightClub.API.Dtos.Article;
 using NightClub.Domain.Interfaces;
 using NightClub.Domain.Models;
+using static NightClub.Domain.Constants;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NightClub.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "IsAdmin")]
+    [Authorize(Policy = ADMIN_POLICY)]
     public class ArticlesController : MainController
     {
         private readonly IMapper _mapper;

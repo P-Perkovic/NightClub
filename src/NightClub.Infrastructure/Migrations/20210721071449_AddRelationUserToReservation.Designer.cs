@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NightClub.Infrastructure.Context;
 
 namespace NightClub.Infrastructure.Migrations
 {
     [DbContext(typeof(NightClubDbContext))]
-    partial class NightClubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210721071449_AddRelationUserToReservation")]
+    partial class AddRelationUserToReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,10 +124,8 @@ namespace NightClub.Infrastructure.Migrations
                     b.Property<string>("ReservedFor")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(2);
+                    b.Property<string>("Status")
+                        .HasColumnType("varchar(150)");
 
                     b.Property<int>("TableId")
                         .HasColumnType("int");

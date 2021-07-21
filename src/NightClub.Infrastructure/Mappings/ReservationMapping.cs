@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NightClub.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using static NightClub.Domain.Constants;
 
 namespace NightClub.Infrastructure.Mappings
 {
@@ -31,14 +29,23 @@ namespace NightClub.Infrastructure.Mappings
                 .HasDefaultValue(false)
                 .IsRequired();
 
+            builder.Property(r => r.ReservedFor)
+                .HasColumnType("varchar(255)");
+
             builder.Property(r => r.Note);
 
-            builder.Property(r => r.Status);
+            builder.Property(r => r.Status)
+                .HasDefaultValue((int)ReservationStatus.Active); 
 
-            // 1 : N => Reservation : Tables
+            // 1 : N => Table : Reservations
             builder.HasOne(r => r.Table)
                 .WithMany(t => t.Reservations)
                 .HasForeignKey(r => r.TableId);
+
+            // 1 : N => User : Reservations
+            builder.HasOne(r => r.User)
+                .WithMany(u => u.Reservations)
+                .HasForeignKey(r => r.UserStringId);
 
             builder.ToTable("Reservations");
         }

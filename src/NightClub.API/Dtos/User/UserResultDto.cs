@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NightClub.API.Dtos.User
+﻿namespace NightClub.API.Dtos.User
 {
     public class UserResultDto
     {

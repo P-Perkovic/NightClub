@@ -5,10 +5,6 @@ using NightClub.Domain.Interfaces;
 using NightClub.Domain.Services;
 using NightClub.Infrastructure.Context;
 using NightClub.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NightClub.API.Configuration
 {

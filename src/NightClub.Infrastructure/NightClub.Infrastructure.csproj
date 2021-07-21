@@ -21,6 +21,10 @@
     <Compile Remove="Migrations\20210621114054_AddReservations.Designer.cs" />
     <Compile Remove="Migrations\20210719134743_TEST.cs" />
     <Compile Remove="Migrations\20210719134743_TEST.Designer.cs" />
+    <Compile Remove="Migrations\20210721070823_AddRelationUserToReservation.cs" />
+    <Compile Remove="Migrations\20210721070823_AddRelationUserToReservation.Designer.cs" />
+    <Compile Remove="Migrations\20210721083107_CorectReservations.cs" />
+    <Compile Remove="Migrations\20210721083107_CorectReservations.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

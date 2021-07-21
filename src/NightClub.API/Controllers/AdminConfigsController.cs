@@ -1,20 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NightClub.API.Dtos.Admin;
+using static NightClub.Domain.Constants;
 using NightClub.Domain.Interfaces;
 using NightClub.Domain.Models;
-using NightClub.Infrastructure.Context;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NightClub.API.Controllers
 {
-    [Authorize(Policy = "IsAdmin")]
+    [Authorize(Policy = ADMIN_POLICY)]
     [Route("api/[controller]")]
     public class AdminConfigsController : MainController
     {

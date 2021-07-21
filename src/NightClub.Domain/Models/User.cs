@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace NightClub.Domain.Models
 {
@@ -13,5 +11,8 @@ namespace NightClub.Domain.Models
         public string Nickname { get; set; }
 
         public string Email { get; set; }
+
+        /* EF */
+        public IEnumerable<Reservation> Reservations { get; set; }
     }
 }

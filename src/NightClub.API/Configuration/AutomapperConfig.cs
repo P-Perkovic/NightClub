@@ -2,13 +2,10 @@
 using NightClub.API.Dtos.Admin;
 using NightClub.API.Dtos.Article;
 using NightClub.API.Dtos.Category;
+using NightClub.API.Dtos.Reservation;
 using NightClub.API.Dtos.Table;
 using NightClub.API.Dtos.User;
 using NightClub.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NightClub.API.Configuration
 {
@@ -17,7 +14,6 @@ namespace NightClub.API.Configuration
         public AutomapperConfig()
         {
             CreateMap<Category, CategoryResultDto>().ReverseMap();
-            CreateMap<Category, CategoryUpdateDto>().ReverseMap();
             CreateMap<Table, TableResultDto>().ReverseMap();
             CreateMap<Article, ArticleAddDto>().ReverseMap();
             CreateMap<Article, ArticleEditDto>().ReverseMap();
@@ -32,6 +28,8 @@ namespace NightClub.API.Configuration
                 .ForMember(ac => ac.Id, opt => opt.Ignore());
             CreateMap<AdminConfig, AdminConfigUpdateDto>().ReverseMap()
                 .ForMember(ac => ac.Id, opt => opt.Ignore());
+            CreateMap<Reservation, ReservationResultDto>().ReverseMap();
+            CreateMap<Reservation, ReservationAddDto>().ReverseMap();
         }
     }
 }

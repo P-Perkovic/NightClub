@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using static NightClub.Domain.Constants;
 
 namespace NightClub.Domain.Models
 {
     public class Reservation : Entity
     {
         public int TableId { get; set; }
+
+        public string UserStringId { get; set; }
 
         public DateTime DateOfReservation { get; set; }
 
@@ -18,11 +19,39 @@ namespace NightClub.Domain.Models
 
         public bool? IsCanceledByAdmin { get; set; }
 
+        public string ReservedFor { get; set; }
+
         public string Note { get; set; }
 
-        public string Status { get; set; }
+        public int Status { get; set; }
 
         /* EF */
         public Table Table { get; set; }
+
+        public User User { get; set; }
+
+
+        public void SetReservationStatus()
+        {
+            if (this.IsActive == true && this.DateOfReservation < DateTime.Now)
+            {
+                this.Status = (int)ReservationStatus.Past;
+                this.IsActive = false;
+            }
+
+            else if (this.IsCanceled == true)
+            {
+                this.Status = (int)ReservationStatus.Canceled;
+                this.IsActive = false;
+            }
+
+            else if (this.IsCanceledByAdmin == true)
+            {
+
+                this.Status = (int)ReservationStatus.CanceledByAdmin;
+                this.IsActive = false;
+                this.IsCanceled = true;
+            }
+        }
     }
 }

@@ -7,7 +7,6 @@ import { AuthService } from '@auth0/auth0-angular';
 import { AdminConfig } from 'src/app/_models/AdminConfig';
 import { map } from 'rxjs/operators';
 import { NgModel } from '@angular/forms';
-import { debug } from 'console';
 
 @Component({
   selector: 'app-user-profile',

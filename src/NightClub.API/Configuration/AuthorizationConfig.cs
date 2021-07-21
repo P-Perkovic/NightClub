@@ -1,11 +1,6 @@
-﻿using AutoMapper.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NightClub.API.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using static NightClub.Domain.Constants;
 
 namespace NightClub.API.Configuration
 {
@@ -16,7 +11,7 @@ namespace NightClub.API.Configuration
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("IsAdmin", policy => policy.Requirements.Add(new IsAdminAuthorizationRequirement()));
+                options.AddPolicy(ADMIN_POLICY, policy => policy.Requirements.Add(new IsAdminAuthorizationRequirement()));
             });
 
             return services;
