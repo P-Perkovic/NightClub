@@ -6,6 +6,20 @@ export enum ConfigType {
     Int = 'int32'
 }
 
+export enum TableType {
+    Wall = 'WallTable',
+    Standard = 'Standard',
+    VIP = 'VIP'
+}
+
+export enum ConfigKey {
+    ReservationPeriod = 'ReservationPeriod',
+    VIP_Guests = 'VIPMaxNumberOfGuests_TableCategory',
+    Standard_Gusets = 'StandardMaxNumberOfGuests_TableCategory',
+    Wall_Guests = 'WallTableMaxNumberOfGuests_TableCategory'
+
+}
+
 export class ReservData {
 
     constructor() { }

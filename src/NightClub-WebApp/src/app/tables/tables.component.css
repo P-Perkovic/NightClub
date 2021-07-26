@@ -1,0 +1,24 @@
+.tables rect {
+  fill: rgb(5, 75, 5);
+  cursor: pointer;
+}
+
+.tables text {
+  cursor: pointer;
+}
+
+.tables-box {
+  width: 90%;
+}
+
+.disabled {
+  fill: red !important;
+}
+
+.disabled:hover {
+  fill: red !important;
+}
+
+.filter {
+  filter: blur(10px);
+}

@@ -7,6 +7,9 @@ using NightClub.Domain.Models;
 using static NightClub.Domain.Constants;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace NightClub.API.Controllers
 {
@@ -14,31 +17,35 @@ namespace NightClub.API.Controllers
     public class ReservationsController : ControllerBase
     {
         private readonly IReservationService _reservationService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public ReservationsController(IReservationService reservationService, IMapper mapper)
+        public ReservationsController(IReservationService reservationService, IUserService userService, IMapper mapper)
         {
             _reservationService = reservationService;
+            _userService = userService;
             _mapper = mapper;
         }
 
-        [Authorize(Policy = ADMIN_POLICY)]
-        [HttpGet("for-date")]
-        public async Task<IActionResult> GetAllForDate([FromBody] DateTime date)
+        [HttpGet("{date:DateTime}")]
+        public async Task<IActionResult> GetAllForDate(DateTime date)
         {
+            date = date.AddMonths(-1);
             if (date == null) return BadRequest();
 
             var reservations = await _reservationService.GetAllForDate(date);
 
             if (reservations == null) return BadRequest();
 
-            return Ok(_mapper.Map<ReservationResultDto>(reservations));
+            return Ok(_mapper.Map<IEnumerable<ReservationResultDto>>(reservations));
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetForCurrentUser(string userId)
+        [HttpGet]
+        public async Task<IActionResult> GetAllForCurrentUser()
         {
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrWhiteSpace(userId)) return BadRequest();
+            var userId = GetUserId();
+
+            if (userId == null) return BadRequest();
 
             var reservations = await _reservationService.GetAllForCurrentUser(userId);
 
@@ -47,10 +54,12 @@ namespace NightClub.API.Controllers
             return Ok(_mapper.Map<ReservationResultDto>(reservations));
         }
 
-        [HttpGet("dates/{userId}")]
-        public async Task<IActionResult> GetReservedDatesForUser(string userId)
+        [HttpGet("dates")]
+        public async Task<IActionResult> GetReservedDatesForUser()
         {
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrWhiteSpace(userId)) return BadRequest();
+            var userId = GetUserId();
+
+            if (userId == null) return BadRequest();
 
             var dates = await _reservationService.GetReservedDatesForUser(userId);
 
@@ -59,12 +68,27 @@ namespace NightClub.API.Controllers
             return Ok(dates);
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Add(ReservationAddDto reservationDto)
+        public async Task<IActionResult> Add([FromBody] ReservationAddDto reservationDto)
         {
+            reservationDto.DateOfReservation = reservationDto.DateOfReservation.ToLocalTime().AddMonths(-1);
+
             if (!ModelState.IsValid) return BadRequest();
 
-            var reservation = await _reservationService.Add(_mapper.Map<Reservation>(reservationDto));
+            var userId = GetUserId();
+
+            if (userId == null) return BadRequest();
+
+            var user = await _userService.GetById(userId);
+
+            if (user == null) return BadRequest();
+
+            var res = _mapper.Map<Reservation>(reservationDto);
+
+            res.UserStringId = user.StringId;
+
+            var reservation = await _reservationService.Add(res);
 
             if (reservation == null) return BadRequest();
 
@@ -94,6 +118,13 @@ namespace NightClub.API.Controllers
             if (!isCanceled) return BadRequest();
 
             return Ok();
+        }
+
+        private string GetUserId()
+        {
+            if (!User.Identity.IsAuthenticated) return null;
+
+            return User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
         }
     }
 }

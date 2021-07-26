@@ -1,3 +1,4 @@
+import { ReservationService } from './_services/reservation.service';
 import { GlobalApp } from './GlobalApp';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from './_services/article.service';
@@ -24,11 +25,12 @@ import { AuthButtonComponent } from './auth0/AuthButtonComponent';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Auth0Interceptor } from './_interceptors/auth0.interceptor';
-import { ReservTableComponent } from './reservation/reserv-table/reserv-table.component';
+import { ReservTableComponent } from './reserv-table/reserv-table.component';
 import { IdentityGuardService } from './_services/identity-guard.service';
-import { IdentityService } from './_services/identity';
+import { IdentityService } from './_services/identity.service';
 import { UserProfileComponent } from './auth0/user-profile/user-profile.component';
 import { ReservData } from './ConfigData';
+import { TablesComponent } from './tables/tables.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { ReservData } from './ConfigData';
     FooterComponent,
     AuthButtonComponent,
     UserProfileComponent,
-    ReservTableComponent
+    ReservTableComponent,
+    TablesComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { ReservData } from './ConfigData';
     ReservData,
     ArticleService,
     IdentityGuardService,
+    ReservationService,
     IdentityService,
     { provide: HTTP_INTERCEPTORS, useClass: Auth0Interceptor, multi: true }
   ],

@@ -12,6 +12,6 @@ export class NavComponent implements OnInit {
   constructor(public auth: AuthService,
     public app: GlobalApp) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 }

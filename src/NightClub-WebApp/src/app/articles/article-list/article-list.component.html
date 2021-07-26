@@ -1,9 +1,9 @@
-<div class="container py-2">
+<div class="container py-2 heder">
     <h5 class="text-uppercase font-weight-light text-center m-5">News</h5>
     <div class="column mx-5">
         <a *ngIf="app.getRole() == 'admin'" href="/article/new" class="add-article">Add article</a>
         <div *ngIf="!articles" class="text-center">Any article not founded.</div>
-        <div class="py-3 mx-5" *ngFor="let article of articles">
+        <div [id]="article.id" class="py-3 mx-5" *ngFor="let article of articles">
             <div class="card mx-5">
                 <img class="card-img-top" [src]="article.photoFilePath" alt="Card image cap">
                 <div class="card-body">

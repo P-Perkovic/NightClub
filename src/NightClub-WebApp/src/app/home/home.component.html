@@ -1,8 +1,8 @@
-<section class="py-2  heder">
+<section class="py-2 heder">
     <div class="container">
         <h2 class="text-center m-5">Welcome to Night Club Page</h2>
         <div class="text-center m-5">
-            <button [routerLink]="['/reserv-table']" class="btn btn-success">Reserv Table</button>
+            <button [routerLink]="['/reserv-table']" class="btn btn-success">Reserve Table</button>
         </div>
     </div>
 </section>
@@ -12,6 +12,7 @@
         <a href="/news">See all</a>
         <div class="row">
             <div *ngFor="let article of articles"
+                (click)="toArticle(article.id)"
                 class="{{(articles[2]==article) ? 'col-12 col-md-4' : 'col-12 col-md-4 mb-4 mb-md-0'}}">
                 <div class="card">
                     <img class="card-img-top" [src]="article.photoFilePath" alt="Card image cap">

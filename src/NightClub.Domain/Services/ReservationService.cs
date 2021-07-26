@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NightClub.Domain.Services
 {
-    class ReservationService : IReservationService
+    public class ReservationService : IReservationService
     {
         private readonly IReservationRepository _reservationRepository;
 

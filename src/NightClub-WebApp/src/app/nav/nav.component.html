@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/reserv-table']">Reserv</a>
+                <a class="nav-link" [routerLink]="['/reserv-table']">Reserve</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/news']">News</a>
@@ -18,7 +18,7 @@
                 <a *ngIf="app.getRole() == 'admin'" class="nav-link" [routerLink]="['/user']">Admin center</a>
             </li>
             <li class="nav-item">
-                <app-auth-button></app-auth-button>
+                <app-auth-button class="pointer"></app-auth-button>
             </li>
         </ul>
     </div>

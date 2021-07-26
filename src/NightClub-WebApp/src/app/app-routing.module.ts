@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ArticleComponent } from './articles/article/article.component';
 import { ArticleListComponent } from './articles/article-list/article-list.component';
-import { ReservTableComponent } from './reservation/reserv-table/reserv-table.component';
+import { ReservTableComponent } from './reserv-table/reserv-table.component';
 import { UserProfileComponent } from './auth0/user-profile/user-profile.component';
 
 

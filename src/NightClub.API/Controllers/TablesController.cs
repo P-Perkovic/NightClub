@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NightClub.API.Dtos.Table;
 using NightClub.Domain.Interfaces;
@@ -19,6 +20,7 @@ namespace NightClub.API.Controllers
             _tableService = tableService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

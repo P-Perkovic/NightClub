@@ -1,68 +1,71 @@
-<div class='py-4 mx-4' *ngIf="auth.user$ | async as user">
-    <div *ngIf="app.getRole() != 'admin'" class="row align-items-center profile-header">
-      <div class="col-md-2 mb-3 text-center">
-        <img
-          [src]="user.picture"
-          alt="User's profile picture"
-          class="rounded-circle img-fluid profile-picture"
-        />
-      </div>
-      <div class="col-md text-center text-md-left">
-        <h2>{{ user.name }}</h2>
-        <p class="lead text-muted">{{ user.email }}</p>
-      </div>
-    </div>
-
-    <div *ngIf="app.getRole() == 'admin'" class="container py-2 pb-5">
-
-      <ul class="nav nav-tabs">
-        <li class="nav-item" role="presentation">
-          <a class="nav-link active" aria-controls="basic" data-toggle="tab" role="tab" href="#reservations">Reservations</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" aria-controls="basic" data-toggle="tab" role="tab" href="#settings">Settings</a>
-        </li>
-      </ul>
-
-      <div class="tab-content">
-        <!-- Reservations tab -->
-        <div role="tabpanel" class="py-4 tab-pane fade active show" id="reservations">
-          <h5 class="text-center py-2">Reservations</h5>
+<div class='py-4 mx-4 heder' *ngIf="auth.user$ | async as user">
+    <ng-container *ngIf="app.getRole() != 'admin' ;else admin">
+      <div class="row align-items-center profile-header">
+        <div class="col-md-2 mb-3 text-center">
+          <img
+            [src]="user.picture"
+            alt="User's profile picture"
+            class="rounded-circle img-fluid profile-picture"
+          />
         </div>
+        <div class="col-md text-center text-md-left">
+          <h2>{{ user.name }}</h2>
+          <p class="lead text-muted">{{ user.email }}</p>
+        </div>
+      </div>
+    </ng-container>
+</div>
 
-        <!-- Settings tab -->
-        <div role="tabpanel" class="py-4 tab-pane fade" id="settings">
-          <h5 class="text-center py-2">Settings</h5>
-          <div class="row justify-content-center">
-            <div class="col-7">
-              <div class="py-2 row justify-content-between" *ngFor="let adminConfig of adminConfigs">
-                <div class="config row justify-content-between">
-                  <label for="title">{{adminConfig.name}}</label>
-                  <div>
-                    <select class="form-control" [(ngModel)]="adminConfig.value" #value="ngModel">
-                      <option *ngFor="let value of adminConfig.values" 
-                              [value]="value">
-                              {{value}}</option>
-                    </select>
-                    <select *ngIf="isTypeSelectNeeded(adminConfig.typeName)" class="form-control" 
-                            [(ngModel)]="adminConfig.typeName"
-                            (change)="changeValues(adminConfig.key)">
-                      <option value="Day">Day</option>
-                      <option value="Month">Month</option>
-                      <option value="Year">Year</option>
-                    </select>
-                  </div>
-                </div>
+<ng-template #admin>
+  <div *ngIf="app.getRole() == 'admin'" class="container py-2 pb-5">
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" aria-controls="basic" data-toggle="tab" role="tab" href="#reservations">Reservations</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" aria-controls="basic" data-toggle="tab" role="tab" href="#settings">Settings</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Reservations tab -->
+      <div role="tabpanel" class="py-4 tab-pane fade active show" id="reservations">
+        <h5 class="text-center py-2">Reservations</h5>
+      </div>
+
+      <!-- Settings tab -->
+      <div role="tabpanel" class="py-4 tab-pane fade" id="settings">
+        <h5 class="text-center py-2">Settings</h5>
+        <div class="row justify-content-center">
+          <div class="col-7">
+            <div class="py-2 row justify-content-between" *ngFor="let adminConfig of adminConfigs">
+              <div class="config row justify-content-between">
+                <label for="title">{{adminConfig.name}}</label>
                 <div>
-                  <button (click)="updateConfig(adminConfig, value)" [disabled]="!value.dirty" class="btn btn-success">Save</button>
+                  <select class="form-control" [(ngModel)]="adminConfig.value" #value="ngModel">
+                    <option *ngFor="let value of adminConfig.values" 
+                            [value]="value">
+                            {{value}}</option>
+                  </select>
+                  <select *ngIf="isTypeSelectNeeded(adminConfig.typeName)" class="form-control" 
+                          [(ngModel)]="adminConfig.typeName"
+                          (change)="changeValues(adminConfig.key)">
+                    <option value="Day">Day</option>
+                    <option value="Month">Month</option>
+                    <option value="Year">Year</option>
+                  </select>
                 </div>
+              </div>
+              <div>
+                <button (click)="updateConfig(adminConfig, value)" [disabled]="!value.dirty" class="btn btn-success">Save</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-</div>
+  </div>
+</ng-template>
 
 

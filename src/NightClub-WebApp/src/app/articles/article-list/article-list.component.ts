@@ -21,13 +21,13 @@ export class ArticleListComponent implements OnInit {
     private toastr: ToastrService,
     private app: GlobalApp) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.articleService.getArticles()
       .subscribe(a => {
         this.articles = a;
       },
         error => {
-          this.toastr.error('Problem with server, can not get data.');
+          this.toastr.error(GlobalApp.ServerError);
         });
     debugger
   }

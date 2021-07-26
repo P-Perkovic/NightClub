@@ -17,7 +17,7 @@ export class AdminConfigService {
   }
 
   public getAdminConfigByKey(key: string): Observable<AdminConfig> {
-    return this.http.get<AdminConfig>(this.baseUrl + "key");
+    return this.http.get<AdminConfig>(this.baseUrl + key);
   }
 
   public updateConfig(key: string, adminConfig: AdminConfig): Observable<AdminConfig> {

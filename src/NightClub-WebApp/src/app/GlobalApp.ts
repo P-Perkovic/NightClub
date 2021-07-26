@@ -3,6 +3,7 @@ export class GlobalApp {
     public static IsAuthenticated = "isAut";
     public static Rola = "rola";
     public static Admin = "admin";
+    public static ServerError = 'Problem with server, can not get data.';
 
     constructor() { }
 

@@ -1,7 +1,7 @@
+import { Category } from './Category';
 export class Table {
     id: number;
     ordinalNumber: number;
-    categoryId: number;
-    maxNumberOfGuests: number;
-    categoryName: string;
+    category: Category;
+    isDisabled: boolean;
 }

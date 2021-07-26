@@ -1,0 +1,86 @@
+<div class="container py-2 pb-3 heder">
+  <h5 class="text-uppercase font-weight-light text-center m-5">Reserv Table</h5>
+  <div class="row justify-content-center">
+    <div class="col-4 text-center"  id="table">
+      <h5 class="text-center">Chose date</h5>
+      <ngbd-datepicker-popup (dateChanged)="setDate($event)" placeholder="YYYY-MM-DD"></ngbd-datepicker-popup>
+      <span>You can reserve only one table per day.</span>
+    </div>
+  </div>
+  <div class="row justify-content-center pt-2">
+    <form #f="ngForm" class="col-4">
+      <div class="form-group">
+          <label >Table Num:</label>
+          <input [(ngModel)]="table.ordinalNumber"
+                  type="text" 
+                  name="tableNum"
+                  class="form-control"
+                  readonly>
+      </div>
+      <div class="form-group">
+        <label >Table Category:</label>
+        <input [(ngModel)]="table.category.name"
+                type="text" 
+                name="categoryName"
+                class="form-control"
+                readonly>
+      </div>  
+      <div class="form-group">
+        <label >Min Bill Value:</label>
+        <input [(ngModel)]="table.category.minBillValue"
+                type="text" 
+                name="tableMinBillValue"
+                class="form-control"
+                readonly>
+        <span *ngIf="table.category.minBillValue != null">You have to order drinks for min {{table.category.minBillValue}} kn.</span>
+      </div>
+      <div class="form-group">
+        <label for="guests">Number Of Guests</label>
+        <select class="form-control" id="guests" name="guests" 
+                [(ngModel)]="numberOfGuests" 
+                #value="ngModel" 
+                required
+                [disabled]="isTablesDisabled">
+          <option *ngFor="let value of allowedNumberOfGuests" 
+                  [value]="value">
+                  {{value}}</option>
+        </select>
+      </div>
+      <div class="alert alert-danger" *ngIf="value.touched && !value.valid">Number Of Guests is required.</div>
+      <div class="form-group" [style.display]="app.getRole()!='admin' ? 'none' : ''">
+        <label for="reserverName" >Guest Name:</label>
+        <input [(ngModel)]="reservedFor"
+                type="text" 
+                name="reserverName"
+                id="reserverName"
+                class="form-control"
+                [readonly]="isTablesDisabled"
+                [required]="app.getRole()=='admin'"
+                #reserver ="ngModel">
+      </div>  
+      <div class="alert alert-danger" *ngIf="reserver.touched && !reserver.valid && !isTablesDisabled">
+        Guest Name is required.</div>
+      <div class="form-group">
+          <label for="note">Note</label>
+          <textarea [(ngModel)]="note"
+                      name="note" 
+                      id="note" 
+                      class="form-control"
+                      rows="2"
+                      [readonly]="isTablesDisabled">
+          </textarea>
+      </div>
+    <div class="form-group row justify-content-between">
+      <button type="button" [disabled]="!f.valid || isTablesDisabled"  
+              (click)="reserve()" 
+              class="btn btn-success">
+              Reserve
+      </button>
+      <a class="btn btn-danger" [routerLink]="['/home']">Cancel</a>
+    </div>
+    </form>
+  </div>
+</div>
+<app-tables [reservations]="reservations" 
+            [isDisabled]="isTablesDisabled" 
+            (tableChanged)="setTable($event)"></app-tables>

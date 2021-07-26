@@ -9,9 +9,6 @@ namespace NightClub.API.Dtos.Reservation
         public int TableId { get; set; }
 
         [Required]
-        public string UserStringId { get; set; }
-
-        [Required]
         public DateTime DateOfReservation { get; set; }
 
         [Required]

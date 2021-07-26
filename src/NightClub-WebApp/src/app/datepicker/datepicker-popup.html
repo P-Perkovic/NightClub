@@ -1,6 +1,14 @@
 <div class="input-group">
-    <input class="form-control" [placeholder]="placeholder" name="dp" [(ngModel)]="model" ngbDatepicker
-     #d="ngbDatepicker">
+    <input class="form-control" (ngModelChange)="onChange(dateModel)"
+                                [minDate]="fromDate"
+                                [maxDate]="toDate" 
+                                [markDisabled]="app.getRole()=='admin' ? '' : isDisabled"
+                                [placeholder]="placeholder" 
+                                name="dp" 
+                                [(ngModel)]="date" 
+                                ngbDatepicker
+                                #d="ngbDatepicker"
+                                #dateModel = "ngModel">
     <div class="input-group-append">
       <button class="btn btn-outline-secondary fa fa-calendar-alt" (click)="d.toggle()" type="button"></button>
     </div>

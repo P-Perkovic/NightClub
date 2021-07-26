@@ -41,7 +41,7 @@ export class ArticleComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.article.id != 0) {
       this.articleService.getArticleById(this.article.id)
         .subscribe(a => {

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace NightClub.API.Controllers
 {
-    [Authorize(Policy = ADMIN_POLICY)]
     [Route("api/[controller]")]
     public class AdminConfigsController : MainController
     {
@@ -40,6 +39,7 @@ namespace NightClub.API.Controllers
             return Ok(_mapper.Map<AdminConfigResultDto>(adminConfig));
         }
 
+        [Authorize(Policy = ADMIN_POLICY)]
         [HttpPut("{key}")]
         public async Task<IActionResult> Update(string key,[FromBody] AdminConfigUpdateDto adminConfigUpdateDto)
         {

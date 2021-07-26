@@ -22,8 +22,8 @@ export class IdentityService {
   loginWithAuthentication(stateUrl: string = null) {
     this.auth.loginWithPopup().subscribe(() => {
       this.auth.getAccessTokenSilently().pipe(
-        map(t => jwt_decode<DecodedToken>(t).permissions[0])).subscribe(r => {
-          localStorage.setItem(GlobalApp.Rola, r);
+        map(t => jwt_decode<DecodedToken>(t))).subscribe(r => {
+          localStorage.setItem(GlobalApp.Rola, r.permissions[0]);
           this.auth.user$.pipe(first()).subscribe(r => {
             var user = new User();
             user.copyInto(r);

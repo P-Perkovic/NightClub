@@ -1,4 +1,4 @@
-import { IdentityService } from './identity';
+import { IdentityService } from './identity.service';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalApp } from '../GlobalApp';
 import { Injectable } from '@angular/core';
