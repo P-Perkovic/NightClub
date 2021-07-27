@@ -53,5 +53,11 @@ namespace NightClub.Domain.Models
                 this.IsCanceled = true;
             }
         }
+
+        public void SetReservedFor()
+        {
+            if(string.IsNullOrEmpty(this.ReservedFor) || string.IsNullOrWhiteSpace(this.ReservedFor))
+                this.ReservedFor = this.User.Name;
+        }
     }
 }

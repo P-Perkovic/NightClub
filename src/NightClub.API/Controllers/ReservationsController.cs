@@ -51,7 +51,7 @@ namespace NightClub.API.Controllers
 
             if (reservations == null) return BadRequest();
 
-            return Ok(_mapper.Map<ReservationResultDto>(reservations));
+            return Ok(_mapper.Map<IEnumerable<ReservationResultDto>>(reservations));
         }
 
         [HttpGet("dates")]
@@ -68,7 +68,16 @@ namespace NightClub.API.Controllers
             return Ok(dates);
         }
 
-        [AllowAnonymous]
+        [HttpGet("all-dates")]
+        public async Task<IActionResult> GetAllReservedDates()
+        {
+            var dates = await _reservationService.GetAllReservedDates();
+
+            if (dates == null) return BadRequest();
+
+            return Ok(dates);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ReservationAddDto reservationDto)
         {
@@ -108,12 +117,15 @@ namespace NightClub.API.Controllers
         }
 
         [Authorize(Policy = ADMIN_POLICY)]
-        [HttpPut("cancel-for-date")]
-        public async Task<IActionResult> CancelForDate([FromBody] DateTime date)
+        [HttpPut("cancel/{date:DateTime}")]
+        public async Task<IActionResult> CancelForDate(DateTime date, [FromBody] ReservationNoteDto reservationNote)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
+            date = date.AddMonths(-1);
             if (date < DateTime.Now.Date) return BadRequest();
 
-            var isCanceled = await _reservationService.CancelForDate(date);
+            var isCanceled = await _reservationService.CancelForDate(date, reservationNote.Note);
 
             if (!isCanceled) return BadRequest();
 

@@ -1,5 +1,4 @@
 import { Table } from "./Table";
-import { User } from "./User";
 
 export class Reservation {
         id: number;
@@ -10,6 +9,6 @@ export class Reservation {
         isCanceled: boolean;
         reservedFor: string;
         note: string;
+        status: number;
         table: Table;
-        user: User;
 }

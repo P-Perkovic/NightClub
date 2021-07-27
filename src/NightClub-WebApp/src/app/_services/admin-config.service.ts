@@ -8,19 +8,19 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AdminConfigService {
-  private baseUrl: string = environment.baseUrl + 'api/adminconfigs/';
+  private _baseUrl: string = environment.baseUrl + 'api/adminconfigs/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   public getAdminConfigs(): Observable<AdminConfig[]> {
-    return this.http.get<AdminConfig[]>(this.baseUrl);
+    return this._http.get<AdminConfig[]>(this._baseUrl);
   }
 
   public getAdminConfigByKey(key: string): Observable<AdminConfig> {
-    return this.http.get<AdminConfig>(this.baseUrl + key);
+    return this._http.get<AdminConfig>(this._baseUrl + key);
   }
 
   public updateConfig(key: string, adminConfig: AdminConfig): Observable<AdminConfig> {
-    return this.http.put<AdminConfig>(this.baseUrl + key, adminConfig);
+    return this._http.put<AdminConfig>(this._baseUrl + key, adminConfig);
   }
 }

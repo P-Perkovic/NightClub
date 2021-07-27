@@ -1,6 +1,6 @@
-import { GlobalApp } from './../GlobalApp';
+import { Router } from '@angular/router';
+import { GlobalApp } from 'src/app/GlobalApp';
 import { ToastrService } from 'ngx-toastr';
-import { TableService } from './../_services/table.service';
 import { ReservationService } from './../_services/reservation.service';
 import { Component, OnInit } from '@angular/core';
 import { Table } from '../_models/Table';
@@ -23,11 +23,11 @@ export class ReservTableComponent implements OnInit {
   date: Date;
   isTablesDisabled: boolean = true;
 
-  constructor(public resService: ReservationService,
-    public tableService: TableService,
-    private toastr: ToastrService,
-    private reservData: ReservData,
-    public app: GlobalApp) { }
+  constructor(private _resService: ReservationService,
+    private _toastr: ToastrService,
+    private _reservData: ReservData,
+    public app: GlobalApp,
+    private _router: Router) { }
 
   ngOnInit(): void {
     this.resetReservation();
@@ -35,26 +35,14 @@ export class ReservTableComponent implements OnInit {
 
   setDate($event) {
     this.date = new Date($event.year, $event.month, $event.day);
-    this.resService.getAllForDate(this.date)
-      .subscribe(r => {
-        this.reservations = r;
-        this.resetReservation();
-        this.isTablesDisabled = false;
-        setTimeout(() => {
-          window.scrollTo($('#tables').position())
-          var hover = $(document).find('.hover');
-          hover.css('fill', '');
-          hover.removeClass('hover');
-        }, 0);
-      },
-        error => {
-          this.toastr.error(GlobalApp.ServerError);
-        });
+    this.resetReservation();
+    this.getReservations();
+    this.isTablesDisabled = false;
   }
 
   setTable($event) {
     this.table = $event;
-    var allowed = this.reservData.getDataList(ConfigType.Int);
+    var allowed = this._reservData.getDataList(ConfigType.Int);
     this.allowedNumberOfGuests = allowed.slice(0, allowed.findIndex(a =>
       a == this.table.category.maxNumberOfGuests.toString()) + 1);
     setTimeout(() => {
@@ -75,6 +63,13 @@ export class ReservTableComponent implements OnInit {
     }
     this.numberOfGuests = null;
     this.reservedFor = '';
+    this.note = '';
+
+    setTimeout(() => {
+      var chosen = $(document).find('.chosen');
+      chosen.css('fill', '');
+      chosen.removeClass('chosen');
+    }, 0);
   }
 
   reserve() {
@@ -85,13 +80,35 @@ export class ReservTableComponent implements OnInit {
     reservation.reservedFor = this.reservedFor;
     reservation.note = this.note;
 
-    this.resService.addReservation(reservation)
+    this._resService.addReservation(reservation)
       .subscribe(r => {
-        this.toastr.success('The table has been reserved.')
-        this.resetReservation();
+        this._toastr.success('The table has been reserved.')
+        if (this.app.getRole() == GlobalApp.Admin) {
+          this.resetReservation();
+          this.getReservations();
+        }
+        else {
+          this._router.navigate(['/user/']);
+        }
+
       },
         error => {
-          this.toastr.error('Failed to reserve the table.');
+          this._toastr.error('Failed to reserve the table.');
+        });
+  }
+  getReservations() {
+    this._resService.getAllForDate(this.date)
+      .subscribe(r => {
+        this.reservations = r;
+        setTimeout(() => {
+          window.scrollTo($('#tables').position())
+          var hover = $(document).find('.hover');
+          hover.css('fill', '');
+          hover.removeClass('hover');
+        }, 0);
+      },
+        error => {
+          this._toastr.error(GlobalApp.ServerError);
         });
   }
 }

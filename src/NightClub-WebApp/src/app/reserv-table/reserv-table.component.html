@@ -4,7 +4,10 @@
     <div class="col-4 text-center"  id="table">
       <h5 class="text-center">Chose date</h5>
       <ngbd-datepicker-popup (dateChanged)="setDate($event)" placeholder="YYYY-MM-DD"></ngbd-datepicker-popup>
-      <span>You can reserve only one table per day.</span>
+      <span *ngIf="app.getRole()!='admin'">You can reserve only one table per day.</span>
+      <div>
+        <a href="/user">See reservations</a>
+      </div>
     </div>
   </div>
   <div class="row justify-content-center pt-2">
@@ -70,7 +73,7 @@
                       [readonly]="isTablesDisabled">
           </textarea>
       </div>
-    <div class="form-group row justify-content-between">
+    <div class="form-group row justify-content-around">
       <button type="button" [disabled]="!f.valid || isTablesDisabled"  
               (click)="reserve()" 
               class="btn btn-success">

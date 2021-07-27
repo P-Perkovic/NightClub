@@ -13,6 +13,38 @@
           <p class="lead text-muted">{{ user.email }}</p>
         </div>
       </div>
+      <h5 class="text-center py-2">Reservations</h5>
+      <div class="row justify-content-center pt-3">
+        <div *ngIf="reservations" class="col-8">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Table Num</th>
+                <th scope="col">Table Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Min Bill</th>
+                <th scope="col">Num Of Guests</th>
+                <th scope="col">Note</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let res of reservations">
+                <th scope="row">{{res.table.ordinalNumber}}</th>
+                <td>{{res.table.category.name}}</td>
+                <td>{{res.dateOfReservation.split('T')[0]}}</td>
+                <td>{{res.table.category.minBillValue}} kn</td>
+                <td>{{res.numberOfGuests}}</td>
+                <td><button (click)="seeNote(res.note)" *ngIf="res.note" class="btn btn-sm btn-info">See Note</button></td>
+                <td>{{app.getStatusName(res.status)}}</td>
+                <td><button (click)="cancel(res.id)" *ngIf="res.status == 2" class="btn btn-sm btn-danger">Cancel</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!reservations"> No reservations.</div>
+      </div>
     </ng-container>
 </div>
 
@@ -32,6 +64,66 @@
       <!-- Reservations tab -->
       <div role="tabpanel" class="py-4 tab-pane fade active show" id="reservations">
         <h5 class="text-center py-2">Reservations</h5>
+        <div class="row justify-content-center pb-3">
+            <div class="input-group col-2">
+              <select (change)="getReservationsForDate()" class="form-control" id="date" name="date" 
+                      [(ngModel)]="date" 
+                      #value="ngModel">
+                <option *ngFor="let value of reservDates" 
+                        [value]="value">
+                        {{value}}</option>
+              </select>
+          </div>
+          <div class="input-group-append">
+            <button type="button"  
+                    (click)="cancelAll()" 
+                    [disabled]="!cancelNote.valid"
+                    class="btn btn-danger">
+                    Cancel All
+            </button>
+          </div>
+        </div>
+        <div class="row justify-content-center pt-3">
+          <div *ngIf="reservations" class="col-8">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Table Num</th>
+                  <th scope="col">Table Category</th>
+                  <th scope="col">Num Of Guests</th>
+                  <th scope="col">Reserver Name</th>
+                  <th scope="col">Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let res of reservations">
+                  <th scope="row">{{res.table.ordinalNumber}}</th>
+                  <td>{{res.table.category.name}}</td>
+                  <td>{{res.numberOfGuests}}</td>
+                  <td>{{res.reservedFor}}</td>
+                  <td><button (click)="seeNote(res.note)" *ngIf="res.note" class="btn btn-sm btn-info">See Note</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="!reservations"> No reservations.</div>
+        </div>
+        <div class="row justify-content-center pt-5">
+          <div class="form-group col-8">
+            <label for="note">Cancel Note</label>
+          <textarea [(ngModel)]="note"
+                      #cancelNote="ngModel"
+                      name="note" 
+                      id="note" 
+                      class="form-control"
+                      rows="5"
+                      required>
+          </textarea>
+          <div class="alert alert-danger" *ngIf="cancelNote.touched && !cancelNote.valid && !isTablesDisabled">
+            Cancel Note is required for cancelation.
+          </div>
+          </div>
+        </div>
       </div>
 
       <!-- Settings tab -->

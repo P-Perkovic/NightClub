@@ -8,27 +8,27 @@ import { Article } from '../_models/Article';
   providedIn: 'root'
 })
 export class ArticleService {
-  private baseUrl: string = environment.baseUrl + 'api/articles/';
+  private _baseUrl: string = environment.baseUrl + 'api/articles/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   public addArticle(article: Article) {
-    return this.http.post(this.baseUrl, article);
+    return this._http.post(this._baseUrl, article);
   }
 
   public updateArticle(id: number, article: Article) {
-    return this.http.put(this.baseUrl + id, article);
+    return this._http.put(this._baseUrl + id, article);
   }
 
   public getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(this.baseUrl);
+    return this._http.get<Article[]>(this._baseUrl);
   }
 
   public deleteArticle(id: number) {
-    return this.http.delete(this.baseUrl + id);
+    return this._http.delete(this._baseUrl + id);
   }
 
   public getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(this.baseUrl + id);
+    return this._http.get<Article>(this._baseUrl + id);
   }
 }

@@ -14,27 +14,27 @@ import { User } from '../_models/User';
 })
 export class IdentityService {
 
-  constructor(private auth: AuthService,
-    private userService: UserService,
-    private toastr: ToastrService,
-    private router: Router) { }
+  constructor(private _auth: AuthService,
+    private _userService: UserService,
+    private _toastr: ToastrService,
+    private _router: Router) { }
 
   loginWithAuthentication(stateUrl: string = null) {
-    this.auth.loginWithPopup().subscribe(() => {
-      this.auth.getAccessTokenSilently().pipe(
+    this._auth.loginWithPopup().subscribe(() => {
+      this._auth.getAccessTokenSilently().pipe(
         map(t => jwt_decode<DecodedToken>(t))).subscribe(r => {
           localStorage.setItem(GlobalApp.Rola, r.permissions[0]);
-          this.auth.user$.pipe(first()).subscribe(r => {
+          this._auth.user$.pipe(first()).subscribe(r => {
             var user = new User();
             user.copyInto(r);
-            this.userService.addUser(user).subscribe(r => {
+            this._userService.addUser(user).subscribe(r => {
               localStorage.setItem(GlobalApp.IsAuthenticated, GlobalApp.True);
               if (stateUrl) {
-                this.router.navigate([stateUrl]);
+                this._router.navigate([stateUrl]);
               }
             },
               error => {
-                this.toastr.error('Problem in login proces.');
+                this._toastr.error('Problem in login proces.');
                 this.logout();
               });
           });
@@ -43,8 +43,9 @@ export class IdentityService {
   }
 
   logout() {
-    localStorage.removeItem(GlobalApp.Rola);
     localStorage.removeItem(GlobalApp.IsAuthenticated);
-    this.auth.logout();
+    localStorage.removeItem(GlobalApp.Rola);
+    this._router.navigate(['/home/']);
+    this._auth.logout();
   }
 }

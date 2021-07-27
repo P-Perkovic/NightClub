@@ -20,4 +20,17 @@ export class GlobalApp {
             return false;
         }
     }
+
+    public getStatusName(status: number) {
+        switch (status) {
+            case 1:
+                return 'Canceled';
+            case 2:
+                return 'Active';
+            case 3:
+                return 'Past';
+            case 4:
+                return 'Canceled By Admin';
+        }
+    }
 }

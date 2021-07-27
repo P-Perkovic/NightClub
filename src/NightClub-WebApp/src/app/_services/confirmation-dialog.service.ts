@@ -7,7 +7,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 })
 export class ConfirmationDialogService {
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private _modalService: NgbModal) { }
 
   public confirm(
     title: string,
@@ -15,7 +15,7 @@ export class ConfirmationDialogService {
     btnOkText: string = 'Ok',
     btnCancelText: string = 'Cancel',
     dialogSize: 'sm' | 'lg' = 'sm'): Promise<boolean> {
-    const modalRef = this.modalService.open(ConfirmationDialogComponent, { size: dialogSize });
+    const modalRef = this._modalService.open(ConfirmationDialogComponent, { size: dialogSize });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.message = message;
     modalRef.componentInstance.btnOkText = btnOkText;

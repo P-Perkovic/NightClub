@@ -22,33 +22,33 @@ export class NgbdDatepickerPopup implements OnInit {
     @Input() placeholder: string;
     @Output() dateChanged = new EventEmitter<NgbDate>();
 
-    constructor(public calendar: NgbCalendar,
-        private adminConfig: AdminConfigService,
-        public formatter: NgbDateParserFormatter,
-        private reserv: ReservationService,
-        public toastr: ToastrService,
+    constructor(private _calendar: NgbCalendar,
+        private _adminConfig: AdminConfigService,
+        private _formatter: NgbDateParserFormatter,
+        private _reserv: ReservationService,
+        private _toastr: ToastrService,
         public app: GlobalApp) { }
 
     ngOnInit(): void {
-        this.adminConfig.getAdminConfigByKey(ConfigKey.ReservationPeriod.toString())
+        this._adminConfig.getAdminConfigByKey(ConfigKey.ReservationPeriod.toString())
             .subscribe(r => {
                 var period = <NgbPeriod>r.typeName[0].toLowerCase();
                 var value = Number.parseInt(r.value);
-                this.fromDate = this.calendar.getToday();
-                this.toDate = this.calendar.getNext(this.calendar.getToday(), period, value);
+                this.fromDate = this._calendar.getToday();
+                this.toDate = this._calendar.getNext(this._calendar.getToday(), period, value);
             },
                 error => {
-                    this.toastr.error(GlobalApp.ServerError);
+                    this._toastr.error(GlobalApp.ServerError);
                 });
 
-        this.reserv.getReservedDatesForUser()
+        this._reserv.getReservedDatesForUser()
             .subscribe(r => {
                 r.forEach(d => {
-                    this.disabledDates.push(this.formatter.parse(d.toString()));
+                    this.disabledDates.push(this._formatter.parse(d.toString()));
                 });
             },
                 error => {
-                    this.toastr.error(GlobalApp.ServerError);
+                    this._toastr.error(GlobalApp.ServerError);
                 });
     }
 
@@ -65,7 +65,7 @@ export class NgbdDatepickerPopup implements OnInit {
                 if (!model.valid) {
                     this.oldDate = model.value;
                     model.reset();
-                    this.toastr.warning("This date is disabled!");
+                    this._toastr.warning("This date is disabled!");
                 }
                 else if (model.valid)
                     this.dateChanged.emit(model.value);

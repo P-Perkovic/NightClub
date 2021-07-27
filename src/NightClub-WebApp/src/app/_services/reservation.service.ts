@@ -8,31 +8,35 @@ import { Reservation } from '../_models/Reservation';
   providedIn: 'root'
 })
 export class ReservationService {
-  private baseUrl: string = environment.baseUrl + 'api/reservations/';
+  private _baseUrl: string = environment.baseUrl + 'api/reservations/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   public getAllForDate(date: Date): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.baseUrl + date.toDateString());
+    return this._http.get<Reservation[]>(this._baseUrl + date.toDateString());
   }
 
   public getAllForCurrentUser(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.baseUrl);
+    return this._http.get<Reservation[]>(this._baseUrl);
   }
 
   public getReservedDatesForUser(): Observable<Date[]> {
-    return this.http.get<Date[]>(this.baseUrl + "dates");
+    return this._http.get<Date[]>(this._baseUrl + "dates");
+  }
+
+  public getAllReservedDates(): Observable<Date[]> {
+    return this._http.get<Date[]>(this._baseUrl + "all-dates");
   }
 
   public addReservation(reservation: Reservation) {
-    return this.http.post(this.baseUrl, reservation);
+    return this._http.post(this._baseUrl, reservation);
   }
 
-  public cancelReservation(reservationId: string) {
-    this.http.put(this.baseUrl + "cancel/" + reservationId, {});
+  public cancelReservation(reservationId: number) {
+    return this._http.put(this._baseUrl + "cancel/" + reservationId, {});
   }
 
-  public cancelForDate(date: Date) {
-    this.http.put(this.baseUrl + "cancel-for-date", date);
+  public cancelForDate(date: Date, note: string) {
+    return this._http.put(this._baseUrl + "cancel/" + date.toDateString(), { note: note });
   }
 }

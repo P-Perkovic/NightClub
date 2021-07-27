@@ -8,10 +8,14 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  user: any;
 
-  constructor(public auth: AuthService,
+  constructor(private _auth: AuthService,
     public app: GlobalApp) { }
 
   ngOnInit(): void {
+    this._auth.user$.subscribe(r => {
+      this.user = r;
+    });
   }
 }

@@ -8,19 +8,19 @@ import { User } from '../_models/User';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl: string = environment.baseUrl + 'api/users/';
+  private _baseUrl: string = environment.baseUrl + 'api/users/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   public addUser(user: User) {
-    return this.http.post(this.baseUrl, user);
+    return this._http.post(this._baseUrl, user);
   }
 
   public getAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl);
+    return this._http.get<User[]>(this._baseUrl);
   }
 
   public getUserById(id: string): Observable<User> {
-    return this.http.get<User>(this.baseUrl + id);
+    return this._http.get<User>(this._baseUrl + id);
   }
 }

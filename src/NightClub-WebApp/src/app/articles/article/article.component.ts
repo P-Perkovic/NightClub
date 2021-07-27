@@ -3,6 +3,7 @@ import { Article } from 'src/app/_models/Article';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalApp } from 'src/app/GlobalApp';
 
 @Component({
   selector: 'app-article',
@@ -25,12 +26,12 @@ export class ArticleComponent implements OnInit {
   header: string = 'New';
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
-  constructor(private articleService: ArticleService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private toastr: ToastrService) {
+  constructor(private _articleService: ArticleService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _toastr: ToastrService) {
 
-    this.route.params.subscribe(p => {
+    this._route.params.subscribe(p => {
       this.article.id = +p['id'] || 0;
     });
     if (this.article.id != 0) {
@@ -43,10 +44,13 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.article.id != 0) {
-      this.articleService.getArticleById(this.article.id)
+      this._articleService.getArticleById(this.article.id)
         .subscribe(a => {
           this.article = a;
-        });
+        },
+          error => {
+            this._toastr.error(GlobalApp.ServerError);
+          });
     }
   }
 
@@ -68,23 +72,23 @@ export class ArticleComponent implements OnInit {
 
   save() {
     if (this.article.id == 0) {
-      this.articleService.addArticle(this.article)
+      this._articleService.addArticle(this.article)
         .subscribe(() => {
-          this.toastr.success('The article has been added.');
-          this.router.navigate(['/news/']);
+          this._toastr.success('The article has been added.');
+          this._router.navigate(['/news/']);
         },
           error => {
-            this.toastr.error('Failed to add the article.');
+            this._toastr.error('Failed to add the article.');
           })
     }
     else {
-      this.articleService.updateArticle(this.article.id, this.article)
+      this._articleService.updateArticle(this.article.id, this.article)
         .subscribe(() => {
-          this.toastr.success('The article has been updated.');
-          this.router.navigate(['/news/']);
+          this._toastr.success('The article has been updated.');
+          this._router.navigate(['/news/']);
         },
           error => {
-            this.toastr.error('Failed to update the article.');
+            this._toastr.error('Failed to update the article.');
           })
     }
   }

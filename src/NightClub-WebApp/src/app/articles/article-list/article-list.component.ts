@@ -15,32 +15,31 @@ export class ArticleListComponent implements OnInit {
   articles: Article[];
   rola: string = null;
 
-  constructor(private articleService: ArticleService,
-    private router: Router,
-    private confirmationDialogService: ConfirmationDialogService,
-    private toastr: ToastrService,
-    private app: GlobalApp) { }
+  constructor(private _articleService: ArticleService,
+    private _router: Router,
+    private _confirmationDialogService: ConfirmationDialogService,
+    private _toastr: ToastrService,
+    public app: GlobalApp) { }
 
   ngOnInit(): void {
-    this.articleService.getArticles()
+    this._articleService.getArticles()
       .subscribe(a => {
         this.articles = a;
       },
         error => {
-          this.toastr.error(GlobalApp.ServerError);
+          this._toastr.error(GlobalApp.ServerError);
         });
-    debugger
   }
 
   delete(id: number) {
-    this.confirmationDialogService.confirm('Atention', 'Do you really want to delete this article?')
+    this._confirmationDialogService.confirm('Atention', 'Do you really want to delete this article?')
       .then(() =>
-        this.articleService.deleteArticle(id).subscribe(r => {
-          this.toastr.success('The article has been deleted.');
+        this._articleService.deleteArticle(id).subscribe(r => {
+          this._toastr.success('The article has been deleted.');
           this.removeDeletedArticle(id);
         },
           error => {
-            this.toastr.error('Failed to delete the article.');
+            this._toastr.error('Failed to delete the article.');
           }))
       .catch(() => '');
   }
@@ -50,6 +49,6 @@ export class ArticleListComponent implements OnInit {
   }
 
   edit(id: number) {
-    this.router.navigate(['/article/edit/' + id]);
+    this._router.navigate(['/article/edit/' + id]);
   }
 }

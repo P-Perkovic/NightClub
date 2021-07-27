@@ -1,6 +1,6 @@
+import { AuthService } from '@auth0/auth0-angular';
 import { IdentityService } from '../_services/identity.service';
 import { Component, Inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -21,14 +21,14 @@ import { DOCUMENT } from '@angular/common';
 export class AuthButtonComponent {
 
   constructor(@Inject(DOCUMENT) public document: Document,
-    public identity: IdentityService,
-    private auth: AuthService) { }
+    private _identity: IdentityService,
+    public auth: AuthService) { }
 
   login() {
-    this.identity.loginWithAuthentication();
+    this._identity.loginWithAuthentication();
   }
 
   logout() {
-    this.identity.logout();
+    this._identity.logout();
   }
 }

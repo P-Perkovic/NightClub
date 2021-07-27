@@ -38,9 +38,9 @@ namespace NightClub.Domain.Services
             return reservationId;
         }
 
-        public async Task<bool> CancelForDate(DateTime date)
+        public async Task<bool> CancelForDate(DateTime date, string note)
         {
-            await _reservationRepository.CancelAllForDate(date);
+            await _reservationRepository.CancelAllForDate(date, note);
 
             return true;
         }
@@ -53,6 +53,11 @@ namespace NightClub.Domain.Services
         public async Task<IEnumerable<DateTime>> GetReservedDatesForUser(string userId)
         {
             return await _reservationRepository.GetReservedDatesForUser(userId);
+        }
+
+        public async Task<IEnumerable<DateTime>> GetAllReservedDates()
+        {
+            return await _reservationRepository.GetAllReservedDates();
         }
 
         public void Dispose()

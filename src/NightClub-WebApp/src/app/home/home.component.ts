@@ -14,23 +14,23 @@ export class HomeComponent implements OnInit {
   rola: string = null;
   articles: Article[];
 
-  constructor(private articleService: ArticleService,
-    private toastr: ToastrService,
-    private router: Router) {
+  constructor(private _articleService: ArticleService,
+    private _toastr: ToastrService,
+    private _router: Router) {
   }
 
   ngOnInit(): void {
-    this.articleService.getArticles()
+    this._articleService.getArticles()
       .subscribe(a => {
         this.articles = a.slice(0, 3);
       },
         error => {
-          this.toastr.error(GlobalApp.ServerError);
+          this._toastr.error(GlobalApp.ServerError);
         });
   }
 
   toArticle(id: string) {
-    this.router.navigate(['/news/']);
+    this._router.navigate(['/news/']);
     setTimeout(() => {
       window.scrollTo($('#' + id).position())
     }, 500);

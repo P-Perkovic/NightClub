@@ -17,17 +17,17 @@ export class TablesComponent implements OnInit {
   @Input() isDisabled: boolean;
   @Input() reservations: Reservation[];
 
-  constructor(private tableService: TableService,
-    private toastr: ToastrService) { }
+  constructor(private _tableService: TableService,
+    private _toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.tableService.getTables()
+    this._tableService.getTables()
       .subscribe(r => {
         this.tables = r;
         this.jQuery();
       },
         error => {
-          this.toastr.error(GlobalApp.ServerError);
+          this._toastr.error(GlobalApp.ServerError);
         });
   }
 
@@ -58,7 +58,6 @@ export class TablesComponent implements OnInit {
   }
 
   setDisabled() {
-    debugger
     var disabled = $(document).find('.disabled');
     disabled.css('fill', '');
     disabled.removeClass('disabled');

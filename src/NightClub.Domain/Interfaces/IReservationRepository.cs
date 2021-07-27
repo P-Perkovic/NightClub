@@ -10,8 +10,8 @@ namespace NightClub.Domain.Interfaces
         Task<IEnumerable<Reservation>> GetAllForCurrentUser(string userId);
         Task<IEnumerable<Reservation>> GetAllForDate(DateTime date);
         Task Cancel(Reservation reservation);
-        Task CancelAllForDate(DateTime date);
+        Task CancelAllForDate(DateTime date, string note);
         Task<IEnumerable<DateTime>> GetReservedDatesForUser(string userId);
-
+        Task<IEnumerable<DateTime>> GetAllReservedDates();
     }
 }

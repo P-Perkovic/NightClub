@@ -8,11 +8,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class TableService {
-  private baseUrl: string = environment.baseUrl + 'api/tables/';
+  private _baseUrl: string = environment.baseUrl + 'api/tables/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   public getTables(): Observable<Table[]> {
-    return this.http.get<Table[]>(this.baseUrl);
+    return this._http.get<Table[]>(this._baseUrl);
   }
 }

@@ -9,8 +9,10 @@
 <section class="pb-5">
     <div class="container">
         <h5 class="text-uppercase font-weight-light text-center mx-5 mt-5 mb-3">Incoming events</h5>
-        <a href="/news">See all</a>
-        <div class="row">
+        <div class="text-center pb-2">
+            <a href="/news">See all</a>
+        </div>
+        <div class="row justify-content-center">
             <div *ngFor="let article of articles"
                 (click)="toArticle(article.id)"
                 class="{{(articles[2]==article) ? 'col-12 col-md-4' : 'col-12 col-md-4 mb-4 mb-md-0'}}">
