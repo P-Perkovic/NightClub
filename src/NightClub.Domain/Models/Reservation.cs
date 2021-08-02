@@ -31,27 +31,32 @@ namespace NightClub.Domain.Models
         public User User { get; set; }
 
 
-        public void SetReservationStatus()
+        public bool SetReservationStatus()
         {
             if (this.IsActive == true && this.DateOfReservation < DateTime.Now)
             {
                 this.Status = (int)ReservationStatus.Past;
                 this.IsActive = false;
+                return true;
             }
 
-            else if (this.IsCanceled == true)
+            else if (this.IsCanceled == true && this.Status != (int)ReservationStatus.Canceled)
             {
                 this.Status = (int)ReservationStatus.Canceled;
                 this.IsActive = false;
+                return true;
             }
 
-            else if (this.IsCanceledByAdmin == true)
+            else if (this.IsCanceledByAdmin == true && this.Status != (int)ReservationStatus.CanceledByAdmin)
             {
 
                 this.Status = (int)ReservationStatus.CanceledByAdmin;
                 this.IsActive = false;
                 this.IsCanceled = true;
+                return true;
             }
+
+            return false;
         }
 
         public void SetReservedFor()

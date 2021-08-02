@@ -43,7 +43,7 @@ export class IdentityService {
   }
 
   logout() {
-    localStorage.removeItem(GlobalApp.IsAuthenticated);
+    localStorage.setItem(GlobalApp.IsAuthenticated, 'false');
     localStorage.removeItem(GlobalApp.Rola);
     this._router.navigate(['/home/']);
     this._auth.logout();

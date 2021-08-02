@@ -6,11 +6,11 @@ import { domain, clientId, audience, serverUrl } from '../../auth_config.json'
 export const environment = {
   production: false,
   auth: {
-    domain,
-    clientId,
-    audience,
+    domain: "vegapperko.eu.auth0.com",
+    clientId: "syzviMv8FkjVOzf0U7yQeNkfDK5IloxM",
+    audience: "https://nightclub.api"
   },
-  baseUrl: serverUrl
+  baseUrl: "https://localhost:44393/"
 };
 
 /*

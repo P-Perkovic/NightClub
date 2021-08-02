@@ -5,6 +5,7 @@ using NightClub.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NightClub.Infrastructure.Repositories
@@ -15,16 +16,8 @@ namespace NightClub.Infrastructure.Repositories
 
         public async Task<IEnumerable<Reservation>> GetAllForDate(DateTime date)
         {
-            var reservations = await Db.Reservations.AsNoTracking().Where(r => r.IsActive == true && r.DateOfReservation == date)
+            return await Db.Reservations.AsNoTracking().Where(r => r.IsActive == true && r.DateOfReservation == date)
                 .Include(r => r.Table).ThenInclude(t => t.Category).Include(r => r.User).ToListAsync();
-
-            foreach (var reservation in reservations)
-            {
-                reservation.SetReservationStatus();
-                reservation.SetReservedFor();
-            }
-
-            return reservations;
         }
 
         public async Task Cancel(Reservation reservation)
@@ -55,7 +48,7 @@ namespace NightClub.Infrastructure.Repositories
         public async Task<IEnumerable<Reservation>> GetAllForCurrentUser(string userId)
         {
             return await Db.Reservations.AsNoTracking().Where(r => r.UserStringId == userId)
-                .Include(r => r.Table).ThenInclude(t => t.Category).OrderByDescending(r => r.IsActive).ToListAsync();
+                .Include(r => r.Table).ThenInclude(t => t.Category).ToListAsync();
         }
 
         public async Task<IEnumerable<DateTime>> GetReservedDatesForUser(string userId)
@@ -70,6 +63,12 @@ namespace NightClub.Infrastructure.Repositories
             return await Db.Reservations.AsNoTracking()
                 .Where(r => r.IsActive == true && r.DateOfReservation >= DateTime.Now.Date)
                 .OrderBy(r => r.DateOfReservation).GroupBy(r => r.DateOfReservation).Select(r => r.Key).ToListAsync();
+        }
+
+        public async Task UpdateRange(IEnumerable<Reservation> reservations)
+        {
+            Db.UpdateRange(reservations);
+            await SaveChangesAsync();
         }
     }
 }

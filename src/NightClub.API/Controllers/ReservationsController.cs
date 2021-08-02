@@ -37,6 +37,19 @@ namespace NightClub.API.Controllers
 
             if (reservations == null) return BadRequest();
 
+
+            var resForUpdate = new List<Reservation>();
+
+            foreach (var reservation in reservations)
+            {
+                if (reservation.SetReservationStatus())
+                    resForUpdate.Add(reservation);
+                reservation.SetReservedFor();
+            }
+
+            if (resForUpdate.Count() > 0)
+                await _reservationService.UpdateRange(resForUpdate);
+
             return Ok(_mapper.Map<IEnumerable<ReservationResultDto>>(reservations));
         }
 
@@ -51,7 +64,18 @@ namespace NightClub.API.Controllers
 
             if (reservations == null) return BadRequest();
 
-            return Ok(_mapper.Map<IEnumerable<ReservationResultDto>>(reservations));
+            var resForUpdate = new List<Reservation>();
+
+            foreach (var reservation in reservations)
+            {
+                if (reservation.SetReservationStatus())
+                    resForUpdate.Add(reservation);
+            }
+
+            if(resForUpdate.Count() > 0)
+                await _reservationService.UpdateRange(resForUpdate);
+
+            return Ok(_mapper.Map<IEnumerable<ReservationResultDto>>(reservations.OrderByDescending(r => r.IsActive).ThenByDescending(r => r.DateOfReservation)));
         }
 
         [HttpGet("dates")]

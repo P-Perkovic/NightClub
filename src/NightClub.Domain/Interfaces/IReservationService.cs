@@ -14,5 +14,6 @@ namespace NightClub.Domain.Interfaces
         Task<bool> CancelForDate(DateTime date, string note);
         Task<IEnumerable<DateTime>> GetReservedDatesForUser(string userId);
         Task<IEnumerable<DateTime>> GetAllReservedDates();
+        Task UpdateRange(IEnumerable<Reservation> reservations);
     }
 }

@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20210721070823_AddRelationUserToReservation.Designer.cs" />
     <Compile Remove="Migrations\20210721083107_CorectReservations.cs" />
     <Compile Remove="Migrations\20210721083107_CorectReservations.Designer.cs" />
+    <Compile Remove="Migrations\20210802100406_ChangeContextColumn.cs" />
+    <Compile Remove="Migrations\20210802100406_ChangeContextColumn.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

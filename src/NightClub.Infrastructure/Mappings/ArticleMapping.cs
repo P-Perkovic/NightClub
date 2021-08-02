@@ -15,7 +15,8 @@ namespace NightClub.Infrastructure.Mappings
                 .HasColumnType("varchar(255)");
 
             builder.Property(a => a.Content)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("varchar(max)");
 
             builder.Property(a => a.PublishingDate)
                .IsRequired();

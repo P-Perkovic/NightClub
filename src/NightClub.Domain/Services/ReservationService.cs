@@ -60,6 +60,11 @@ namespace NightClub.Domain.Services
             return await _reservationRepository.GetAllReservedDates();
         }
 
+        public async Task UpdateRange(IEnumerable<Reservation> reservations)
+        {
+            await _reservationRepository.UpdateRange(reservations);
+        }
+
         public void Dispose()
         {
             _reservationRepository?.Dispose();

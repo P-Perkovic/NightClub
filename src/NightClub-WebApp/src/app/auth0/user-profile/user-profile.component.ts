@@ -93,7 +93,7 @@ export class UserProfileComponent implements OnInit {
           this.adminConfigs = r;
         },
           error => {
-            this._toastr.error('Problem with server, can not get data.');
+            this._toastr.error(GlobalApp.ServerError);
           });
     }
   }
@@ -102,7 +102,10 @@ export class UserProfileComponent implements OnInit {
     this._resService.getAllForCurrentUser()
       .subscribe(r => {
         this.reservations = r;
-      });
+      },
+        error => {
+          this._toastr.error(GlobalApp.ServerError);
+        });
   }
 
   getReservedDates() {
@@ -114,7 +117,10 @@ export class UserProfileComponent implements OnInit {
         });
         this.date = this.reservDates[0];
         this.getReservationsForDate();
-      });
+      },
+        error => {
+          this._toastr.error(GlobalApp.ServerError);
+        });
   }
 
   getReservationsForDate() {
@@ -123,7 +129,10 @@ export class UserProfileComponent implements OnInit {
     this._resService.getAllForDate(date)
       .subscribe(r => {
         this.reservations = r;
-      });
+      },
+        error => {
+          this._toastr.error(GlobalApp.ServerError);
+        });
   }
 
   cancelAll() {
@@ -159,5 +168,14 @@ export class UserProfileComponent implements OnInit {
 
   seeNote(note: string) {
     this._confirmationDialogService.confirm('Note', note, '', 'Ok');
+  }
+
+  getExpectedNumOfGuests(): number {
+    var guests = 0;
+    this.reservations.forEach(r => {
+      guests += r.numberOfGuests;
+    });
+
+    return guests;
   }
 }
