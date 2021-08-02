@@ -33,7 +33,7 @@ namespace NightClub.Domain.Models
 
         public bool SetReservationStatus()
         {
-            if (this.IsActive == true && this.DateOfReservation < DateTime.Now)
+            if (this.IsActive == true && this.DateOfReservation < DateTime.Now.Date)
             {
                 this.Status = (int)ReservationStatus.Past;
                 this.IsActive = false;
