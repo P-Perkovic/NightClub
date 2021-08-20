@@ -21,7 +21,6 @@ export class Auth0Interceptor implements HttpInterceptor {
                 return next.handle(tokenReq);
             }),
             catchError((error) => {
-                console.log(error);
                 return next.handle(req);
             })
         );

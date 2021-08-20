@@ -30,7 +30,8 @@ namespace NightClub.API.Controllers
         [HttpGet("{date:DateTime}")]
         public async Task<IActionResult> GetAllForDate(DateTime date)
         {
-            date = date.AddMonths(-1);
+            date = date.Date;
+
             if (date == null) return BadRequest();
 
             var reservations = await _reservationService.GetAllForDate(date);
@@ -105,7 +106,7 @@ namespace NightClub.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ReservationAddDto reservationDto)
         {
-            reservationDto.DateOfReservation = reservationDto.DateOfReservation.ToLocalTime().AddMonths(-1);
+            reservationDto.DateOfReservation = reservationDto.DateOfReservation.Date;
 
             if (!ModelState.IsValid) return BadRequest();
 
@@ -144,6 +145,8 @@ namespace NightClub.API.Controllers
         [HttpPut("cancel/{date:DateTime}")]
         public async Task<IActionResult> CancelForDate(DateTime date, [FromBody] ReservationNoteDto reservationNote)
         {
+            date = date.Date;
+
             if (!ModelState.IsValid) return BadRequest();
 
             date = date.AddMonths(-1);

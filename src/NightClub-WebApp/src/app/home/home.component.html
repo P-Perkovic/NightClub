@@ -21,6 +21,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{article.title}}</h5>
                         <p class="card-text">{{article.context}}</p>
+                        <p class="card-text">Event Date: {{article.eventDate | date:'yyyy-MM-dd'}}</p>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Last updated {{article.publishingDate | date:'dd-MM-yyyy HH:mm'}}</small>

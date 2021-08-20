@@ -5,4 +5,5 @@ export class Article {
     publishingDate: Date;
     photoFilePath: string;
     photoURL: any;
+    eventDate: Date;
 }

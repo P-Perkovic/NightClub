@@ -10,6 +10,8 @@ namespace NightClub.Domain.Models
 
         public DateTime PublishingDate { get; set; }
 
+        public DateTime EventDate { get; set; }
+
         public string PhotoFilePath { get; set; }
     }
 }

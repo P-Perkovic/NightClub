@@ -1,3 +1,4 @@
+import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GlobalApp } from 'src/app/GlobalApp';
 import { ToastrService } from 'ngx-toastr';
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Table } from '../_models/Table';
 import { Reservation } from '../_models/Reservation';
 import { ConfigType, ReservData } from '../ConfigData';
+import { Location } from '@angular/common';
 declare var $: JQueryStatic;
 
 @Component({
@@ -27,17 +29,23 @@ export class ReservTableComponent implements OnInit {
     private _toastr: ToastrService,
     private _reservData: ReservData,
     public app: GlobalApp,
-    private _router: Router) { }
+    private _router: Router,
+    private _location: Location) { }
 
   ngOnInit(): void {
     this.resetReservation();
+    var dateIn = <any>this._location.getState();
+    if (dateIn.eventDate) {
+      this.date = new Date(dateIn.eventDate);
+      setTimeout(() => {
+        this.afterSetDate();
+      }, 200);
+    }
   }
 
-  setDate($event) {
-    this.date = new Date($event.year, $event.month, $event.day);
-    this.resetReservation();
-    this.getReservations();
-    this.isTablesDisabled = false;
+  setDate(model: NgModel) {
+    this.date = new Date(model.value.year, model.value.month - 1, model.value.day);
+    this.afterSetDate();
   }
 
   setTable($event) {
@@ -110,5 +118,11 @@ export class ReservTableComponent implements OnInit {
         error => {
           this._toastr.error(GlobalApp.ServerError);
         });
+  }
+
+  afterSetDate() {
+    this.resetReservation();
+    this.getReservations();
+    this.isTablesDisabled = false;
   }
 }

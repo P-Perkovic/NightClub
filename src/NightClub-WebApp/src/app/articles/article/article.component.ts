@@ -4,6 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalApp } from 'src/app/GlobalApp';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-article',
@@ -17,13 +18,16 @@ export class ArticleComponent implements OnInit {
     content: '',
     publishingDate: null,
     photoFilePath: '',
-    photoURL: "#"
+    photoURL: "#",
+    eventDate: null
   }
   fileName: string = 'Choose image';
   fileBtn: string = this.fileName;
   isImageInputInvalid: boolean = true;
   isImageInputClicked: boolean = false;
   header: string = 'New';
+  isDateValid = false;
+  isDateClicked = false;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
   constructor(private _articleService: ArticleService,
@@ -91,5 +95,16 @@ export class ArticleComponent implements OnInit {
             this._toastr.error('Failed to update the article.');
           })
     }
+  }
+  setDate(model: NgModel) {
+    if (!model.valid) {
+      return;
+    }
+    this.isDateValid = true;
+    this.article.eventDate = new Date(model.value.year, model.value.month - 1, model.value.day);
+  }
+
+  dateClick() {
+    this.isDateClicked = true;
   }
 }

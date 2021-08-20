@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NightClub.API.Dtos.Article
 {
@@ -18,5 +19,8 @@ namespace NightClub.API.Dtos.Article
         public string PhotoFilePath { get; set; }
 
         public string PhotoURL { get; set; }
+
+        [Required(ErrorMessage = "The field is required")]
+        public DateTime EventDate { get; set; }
     }
 }

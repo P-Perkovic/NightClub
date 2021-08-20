@@ -10,11 +10,11 @@ import { AuthService } from '@auth0/auth0-angular';
 export class NavComponent implements OnInit {
   user: any;
 
-  constructor(public _auth: AuthService,
+  constructor(public auth: AuthService,
     public app: GlobalApp) { }
 
   ngOnInit(): void {
-    this._auth.user$.subscribe(r => {
+    this.auth.user$.subscribe(r => {
       this.user = r;
     },
       error => {

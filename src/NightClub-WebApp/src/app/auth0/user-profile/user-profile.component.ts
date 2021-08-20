@@ -125,7 +125,7 @@ export class UserProfileComponent implements OnInit {
 
   getReservationsForDate() {
     var dateArray = this.date.split('-');
-    var date = new Date(Number.parseInt(dateArray[0]), Number.parseInt(dateArray[1]), Number.parseInt(dateArray[2]));
+    var date = new Date(Number.parseInt(dateArray[0]), Number.parseInt(dateArray[1]) - 1, Number.parseInt(dateArray[2]));
     this._resService.getAllForDate(date)
       .subscribe(r => {
         this.reservations = r;
@@ -137,7 +137,7 @@ export class UserProfileComponent implements OnInit {
 
   cancelAll() {
     var dateArray = this.date.split('-');
-    var date = new Date(Number.parseInt(dateArray[0]), Number.parseInt(dateArray[1]), Number.parseInt(dateArray[2]));
+    var date = new Date(Number.parseInt(dateArray[0]), Number.parseInt(dateArray[1]) - 1, Number.parseInt(dateArray[2]));
     this._confirmationDialogService.confirm('Atention', 'Do you really want to cancel all reservations?', 'Cancel', 'Go Back')
       .then(() =>
         this._resService.cancelForDate(date, this.note)

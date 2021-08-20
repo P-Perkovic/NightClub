@@ -30,7 +30,11 @@ namespace NightClub.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var articles = await _articleService.GetAll();
-            articles = articles.OrderByDescending(a => a.PublishingDate);
+            var futureArticles = articles.Where(a => a.EventDate >= DateTime.Now.Date).OrderBy(a => a.EventDate).ToList();
+            var pastArticles = articles.Where(a => a.EventDate < DateTime.Now.Date).OrderByDescending(a => a.PublishingDate).ToList();
+
+            futureArticles.AddRange(pastArticles);
+            articles = futureArticles;
 
             return Ok(_mapper.Map<IEnumerable<ArticleResultDto>>(articles));
         }
@@ -48,7 +52,11 @@ namespace NightClub.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ArticleAddDto articleDto)
         {
+            articleDto.EventDate = articleDto.EventDate.Date;
+
             if (!ModelState.IsValid) return BadRequest();
+
+            articleDto.EventDate = articleDto.EventDate.ToLocalTime();
 
             var photoURL = articleDto.PhotoURL;
 
@@ -65,9 +73,13 @@ namespace NightClub.API.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, ArticleEditDto articleDto)
         {
+            articleDto.EventDate = articleDto.EventDate.Date;
+
             if (id != articleDto.Id) return BadRequest();
 
             if (!ModelState.IsValid) return BadRequest();
+
+            articleDto.EventDate = articleDto.EventDate.ToLocalTime();
 
             var photoURL = articleDto.PhotoURL;
 

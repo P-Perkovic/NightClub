@@ -9,13 +9,15 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">{{article.title}}</h5>
                     <p class="card-text">{{article.content}}</p>
+                    <p class="card-text font-weight-bold">Event Date: {{article.eventDate | date:'yyyy-MM-dd'}}</p>
                 </div>
                 <div class="card-footer">
                     <div class="row justify-content-between">
-                        <small class="text-muted">Last updated {{article.publishingDate | date:'dd-MM-yyyy HH:mm'}}</small>
-                        <div *ngIf="app.getRole() == 'admin'">
-                            <button (click)="edit(article.id)" class="btn btn-sm btn-success">Edit</button>
-                            <button (click)="delete(article.id)" class="btn btn-sm btn-danger ml-2">Delete</button>
+                        <small class="text-muted">Last updated {{article.publishingDate | date:'yyyy-MM-dd HH:mm'}}</small>
+                        <div>
+                            <a *ngIf="showReservBtn(article.eventDate)" [routerLink]="['/reserv-table']" [state]="{ eventDate: article.eventDate }" class="btn btn-sm btn-success">Reserve</a>
+                            <button *ngIf="app.getRole() == 'admin'" (click)="edit(article.id)" class="btn btn-sm btn-primary ml-2">Edit</button>
+                            <button *ngIf="app.getRole() == 'admin'" (click)="delete(article.id)" class="btn btn-sm btn-danger ml-2">Delete</button>
                         </div>
                     </div>
                 </div>

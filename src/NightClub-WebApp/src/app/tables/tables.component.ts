@@ -52,8 +52,9 @@ export class TablesComponent implements OnInit {
 
   mapTables() {
     this.tables.forEach(t => {
-      if (this.reservations.find(r => r.table.id == t.id))
+      if (this.reservations.find(r => r.table.id == t.id)) {
         t.isDisabled = true;
+      }
     });
   }
 

@@ -18,9 +18,8 @@ export class NgbdDatepickerPopup implements OnInit {
     fromDate: NgbDateStruct;
     toDate: NgbDateStruct;
     disabledDates: NgbDateStruct[] = new Array<NgbDateStruct>();
-
-    @Input() placeholder: string;
-    @Output() dateChanged = new EventEmitter<NgbDate>();
+    @Input() placeholder: string = "YYYY-MM-DD"
+    @Output() dateChanged = new EventEmitter<NgModel>();
 
     constructor(private _calendar: NgbCalendar,
         private _adminConfig: AdminConfigService,
@@ -68,7 +67,7 @@ export class NgbdDatepickerPopup implements OnInit {
                     this._toastr.warning("This date is disabled!");
                 }
                 else if (model.valid)
-                    this.dateChanged.emit(model.value);
+                    this.dateChanged.emit(model);
             }, 1000);
         }
     }

@@ -21,6 +21,9 @@ namespace NightClub.Infrastructure.Mappings
             builder.Property(a => a.PublishingDate)
                .IsRequired();
 
+            builder.Property(a => a.EventDate)
+               .IsRequired();
+
             builder.ToTable("Articles");
         }
     }

@@ -13,5 +13,7 @@ namespace NightClub.API.Dtos.Article
         public DateTime PublishingDate { get; set; }
 
         public string PhotoFilePath { get; set; }
+
+        public DateTime EventDate { get; set; }
     }
 }

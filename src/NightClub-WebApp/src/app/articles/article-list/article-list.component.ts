@@ -51,4 +51,14 @@ export class ArticleListComponent implements OnInit {
   edit(id: number) {
     this._router.navigate(['/article/edit/' + id]);
   }
+
+  showReservBtn(eventDate: Date) {
+    var dateNow = new Date();
+    dateNow = new Date(dateNow.toDateString());
+    var date = new Date(eventDate);
+    if (dateNow <= date)
+      return true;
+
+    return false;
+  }
 }
